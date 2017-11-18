@@ -1,0 +1,18 @@
+
+
+
+
+venv
+
+$cd ~/km/python/kinvent
+
+$source venv/bin/activate
+
+#items REST:
+$python flask_restful_api_list_item.py
+
+
+
+
+#to deactivate or come out
+$deactivate
