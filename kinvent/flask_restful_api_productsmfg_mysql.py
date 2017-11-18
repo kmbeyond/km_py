@@ -1,3 +1,10 @@
+
+#RESTful service
+#Start the service: python flask_restful_api_productsmfg_mysql.py
+#Test using an API test tool ( Ex: PostMan, SoapUI)
+#Dependecies:
+#MySQL db:mycompany 
+
 from flask import Flask, request
 from flask_restful import Resource, Api, reqparse
 from flask_jwt import JWT, jwt_required
