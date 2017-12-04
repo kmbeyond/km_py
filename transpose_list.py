@@ -1,3 +1,11 @@
+
+
+#even array
+aMyArray = [ ['a1', 'a2','a3'], ['b1','b2','b3'], ['c1','c2', 'c3']]
+aMyArrayT = [[row[i] for row in aMyArray] for i in range(len(aMyArray))]
+print(aMyArrayT)
+
+#uneven & manual
 aMyArray = [ ['a1', 'a2','a3'], ['b1','b2','b3','b4','b5'], ['c1','c2']]
 
 aMyArrayTrsp = []
@@ -28,7 +36,7 @@ for i in range( iMaxRows ):
     for j in range(iMaxCols ):
         aMyArrayTemp.append("")
     aMyArrayTrsp.append(aMyArrayTemp)
-    
+
 print ("transposing..")
 for i in range( iMaxRows ):
     for j in range(iMaxCols):

@@ -2,11 +2,26 @@
 
 import numpy as np
 
-aMyArray = np.array([['a1', 'a2','a3'],
-    ['b1','b2','b3','b4','b5', 'b6'], ['c1','c2']])
+#even shaped array 
+#aEvenArr = np.array([[1,2,3],[4,5,6],[7,8,9]])
+aEvenArr = np.array([["1","2","3","33"],["4","5","6", "66"],["7","8","9", "99"]])
+print(aEvenArr)
+
+#Transpose in 2 ways:
+print(aEvenArr.T)
+print(np.transpose(aEvenArr))
+
+#uneven shaped array - manually transpose
+aMyArray = np.array([["a1", "a2","a3"],
+    ["b1","b2","b3","b4","b5", "b6"], ["c1","c2"]])
+print(type(aMyArray))
 print(aMyArray)
 
 
+
+aMyArrayNum = np.array([[1,2], [3,4]])
+print(type(aMyArrayNum))
+print(aMyArrayNum)
 
 '''
 print ("initial array:")
