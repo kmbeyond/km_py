@@ -20,14 +20,27 @@ conn = pymysql.connect(host="localhost",  # your host
 cur = conn.cursor()
 
 #Build the sql String
-sql_select = "SELECT * FROM T_EMP where ID>%s"
+#SQL as plain String
+sql_select = "SELECT T_EMP.* FROM T_EMP " \
+    " where EMP_CODE = '{}'".format("emp3")
+# Execute the SQL
+rows = cur.execute(sql_select)
+print("Rows: {}".format(rows))
+for row in cur.fetchall() :
+    print("{}, {}, {}, {}".format(row[0], row[1], row[2], row[3]))
 
+
+#SQL with list arguments
+sql_select = "SELECT * FROM T_EMP where ID>%s"
 # Execute the SQL
 rows = cur.execute(sql_select, [0])
 print("Rows: {}".format(rows))
 for row in cur.fetchall() :
     print("{}, {}, {}, {}".format(row[0], row[1], row[2], row[3]))
 
+
+
+'''
 print("Query directly into row:")
 sql_select = "SELECT * FROM T_EMP"
 cur.execute(sql_select)
@@ -48,7 +61,7 @@ if rows == 0:
 else:
     print("User {} found".format(username))
 ##################
-
+'''
 
 cur.close()
 conn.close()
