@@ -61,7 +61,7 @@ class ProductsMfgModel:
             return None
 
     def updateSingleColRec(cursor, tablename, columnName, columnValue, columnValueType, rowdict):
-        #updates a column of given table
+        #updates a column of given table (tablename.columnName = columnValue)
         #Columns filter in Dictionary
         lstCols=set(rowdict)
         print("Columns: {}".format(lstCols))
@@ -101,7 +101,7 @@ class ProductsMfgModel:
         #	"mfg_dt": "11/11/2017",
         #	"mfg_unit_cd": "MU-DT-001",
         #	"machine_cd": "SCR-001",
-        #    "warehouse_cd": "Warehouse"
+        #   "warehouse_cd": "Warehouse"
         #}
 
         #Check if Warehouse exists
