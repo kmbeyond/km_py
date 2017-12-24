@@ -10,15 +10,17 @@ class LotteryPlayer:
     def __init__(self, name):
         self.name=name,
         self.numbers=(5,6,3,8)
-        
+
     def total(self):
         return sum(self.numbers)
-    
 
+    def __str__(self):
+        return "name= {}; numbers= {}".format(self.name, self.numbers)
 
 #Create instance(s) of class
 print("player1:")
 player1=LotteryPlayer("John")
+print(player1)
 
 print("Name: "+str(player1.name))
 print(player1.numbers)

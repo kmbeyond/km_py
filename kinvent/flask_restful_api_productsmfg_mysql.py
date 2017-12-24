@@ -1,7 +1,9 @@
 
 #RESTful service
-#Start the service: python flask_restful_api_productsmfg_mysql.py
-#Test using an API test tool ( Ex: PostMan, SoapUI)
+#1.Start the service:
+#python flask_restful_api_productsmfg_mysql.py
+#(OR) FLASK_APP=flask_restful_api_productsmfg_mysql.py flask run
+#2.Test using an API test tool ( Ex: PostMan, SoapUI)
 #
 
 from flask import Flask, request

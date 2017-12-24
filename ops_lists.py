@@ -2,6 +2,14 @@
 listNum=[11, 22, 33,44,55,66,77,88,99]
 print(listNum)
 
+#Create list using range()
+listNum=list(range(10))
+listNum
+#=> [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+
+listNum=list(range(1, 10))
+listNum
+#=> [1, 2, 3, 4, 5, 6, 7, 8, 9]
 
 print(listNum[:2]) #Slice of list from start to index 2(exclusive)
 
@@ -11,6 +19,11 @@ print(listNum[1:4]) #Slice of list from index 1 to 4(exclusive)
 #Last 2
 #NOTE: Because the count in reverse starts with -1.
 print(listNum[-2:])
+#=> prints last 2 list items
+
+#List from starting index & step by 2
+listNum[1::2]
+#=> [1, 3, 5, 7, 9]
 
 #listNum[:] = 99
 print(listNum)
@@ -46,6 +59,7 @@ print(listNum)
 
 #Scenario: insert values dynamically
 #loop list using while
+'''
 i=1
 while i < len(AllWords):
     print("{} = {}".format(i, AllWords[i]))
@@ -53,11 +67,13 @@ while i < len(AllWords):
         AllWords.insert(i, '\n')
         print("New Line added.")
     i+=2
-
+'''
 
 
 #Delete an element from list
 listNum.remove(55)
+
+
 
 #delete top element: use pop() function
 listNum.pop()
@@ -101,12 +117,14 @@ for i in range(len(multiDList)):
 
 #Delete from a 2D list
 list = [["hello","son", 52],["welcome","home",65],["good","work",6]]
-name = input("Name: ")
-if name in list[]:
-    del list[name]
-    print("name + " deleted")
-else:
-    print("invalid name")
+name = input("Enter name: ")
+
+for i in list:
+    if(i[1]==name):
+        list.remove(i)
+        print(name + " deleted")
+
+print(list)
 
 
 #List of tuples
@@ -122,22 +140,36 @@ for val in tokenCountList: newList.append(val[1])
 
 print(newList)
 
+#-----iterate using itertools functions
 #zip(): Returns an iterator of tuples for each element in (one or more) lists simultaneosly
-
-x = [1, 2, 3]
-y = [4,5,6]
+#truncates to the smallest list; use zip_longest() to retain till longest list
+x = [1, 2, 4,5,8,9]
+y = [100,300,400,700]
 zipped = zip(x, y)
 list(zipped)
-#returns: [(1, 4), (2, 5), (3, 6)]
+#returns: [(1, 100), (2, 300), (4, 400), (5, 700)]
 
+#zip multiple lists
 z = [10,30,50,70]
 zipped2 = zip(x,y,z)
 list(zipped)
-#returns: [(1, 4, 10), (2, 5, 30), (3, 6, 50)]
+#=> [(1, 4, 10), (2, 5, 30), (3, 6, 50)]
 
 #zip_longest(): to retain the values in uneven list
-from itertools import *
+from itertools import zip_longest
 list(zip_longest(x,y,z))
 
+#add values at same index from 2 lists
+ListA = [1,2,3,4,5]
+ListB = [10,20,30,40,50,60,70]
+
+[x + y for x, y in zip(ListA, ListB)]
+#=>[11, 22, 33, 44, 55]
+
+#retain values from longer list
+[x + y for x, y in zip_longest(ListA, ListB, fillvalue=0)]
+#=> [11, 22, 33, 44, 55, 60, 70]
+
+#Break list of tuples into separate lists
 x2, y2 = zip(*zip(x, y))
 x == list(x2) and y == list(y2)

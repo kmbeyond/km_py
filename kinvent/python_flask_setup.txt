@@ -1,0 +1,43 @@
+
+
+
+-----venv setup-----
+
+cd ~/km/python/kinvent
+
+pip install virtualenv
+
+virtualenv venv --python=python3.5
+
+source venv/bin/activate
+pip freeze
+pip install Flask
+pip install Flask-RESTful
+pip install Flask-JWT
+pip install PyMySQL
+
+##Deactivate after work
+
+deactivate
+
+
+----Execution-----
+venv
+
+cd ~/km/python/kinvent
+
+source venv/bin/activate
+
+#items REST:
+python flask_restful_api_productsmfg_mysql.py
+
+#OR
+FLASK_APP=flask_restful_api_productsmfg_mysql.py flask run
+
+#Flask REST API runs at:  http://127.0.0.1:5000/
+#Control+C to exit the server session
+
+#Use PostMan or SoapUI:
+
+#to deactivate or come out
+$deactivate
