@@ -14,11 +14,21 @@ class Student:
             self.marks = []
             for x in marks:
                 self.marks.append(x)
-        
+        print("Called: constructor on :{}".format(self.name))
+
+    def __del__(self):
+        print("Called: destructor on :{}".format(self.name))
+        self.marks=[]
+        pass
+
+    def remove(self):
+        print("Called: remove")
+        self._finalizer()
+
     def printMe(self):
         print("About Me: ")
         print("I am {}, from {} School & my marks {}".format(self.name,self.school,str(self.marks)))
-                
+
     def average(self):
         return sum(self.marks)/len(self.marks)
 
@@ -40,8 +50,8 @@ class Student:
     @classmethod
     def friend_classMethod(cls, origin, name):
         return cls(name, origin.school, [])
-    
-    
+
+
 anna = Student("Anna", "MIT", [60])
 print(anna.marks)
 anna.marks.append(80)
@@ -65,5 +75,10 @@ andy.printMe()
 andy.marks.append([60,90])
 andy.printMe()
 
+print("anna is instance of Student: {}".format(isinstance(anna, Student)))
+print("andy is instance of Student: {}".format(isinstance(andy, Student)))
 
-
+print("Explicitly destroying object...")
+andy=None
+del anna
+print("Explicit destroy completed.")
