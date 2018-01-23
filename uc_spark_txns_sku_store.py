@@ -19,12 +19,21 @@ Steps:
 -Total Qty by Date, Store, Sku for specific Sku
 -Total Qty by Store, Sku
 
-spark submit in local (use py3.5 as 3.6 gives error):
+spark submit in local (use py3.5 because 3.6 gives error):
 source activate py35
 spark-submit --master local ~/km/km_py/uc_spark_txns_sku_store.py
 
 #on commandline
 pyspark --master local
+
+import uc_spark_txns_sku_store
+uc_spark_txns_sku_store.main()
+
+#using subprocess
+exec(open("uc_spark_txns_sku_store.py").read()) #py3
+execfile('uc_spark_txns_sku_store.py') #py2
+#They appear in:
+http://localhost:4040/jobs
 
 '''
 
@@ -32,13 +41,14 @@ from pyspark.sql.functions import to_date
 from pyspark.sql.types import IntegerType
 from pyspark.sql import SparkSession
 
-
-#using Spark session (in spark-submit only)
+#def main():
+    #using Spark session (in spark-submit only)
 spark = SparkSession.builder \
-    .master("local") \
-    .appName("Word Count") \
-    .config("spark.some.config.option", "some-value") \
+    .master("yarn") \
+    .appName("Txns SKU Store") \
     .getOrCreate()
+
+    # .config("spark.some.config.option", "some-value") \
 
 txnsDF = spark.read.format("csv").option("header","true"). \
     load('/home/kiran/km/km_hadoop/data/data_rtl_txns.csv')
@@ -136,3 +146,8 @@ import matplotlib
 #%matplotlib inline
 txnsStoresSkuDFGph.plot()
 matplotlib.pyplot.show(block=True)
+
+
+
+#if __name__ == "__main__":
+#    main()
