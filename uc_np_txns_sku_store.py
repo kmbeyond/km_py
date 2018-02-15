@@ -27,7 +27,9 @@ txnsDF = pd.read_csv("/home/kiran/km/km_hadoop/data/data_rtl_txns.csv")
 
 #stores
 storesDF = pd.read_csv("/home/kiran/km/km_hadoop/data/data_rtl_stores.csv"). \
-    rename(columns={'addr1': 'store_addr1'}).rename(columns={'city': 'store_city'}).rename(columns={'state': 'store_state'})
+    rename(columns={'addr1': 'store_addr1'}). \
+    rename(columns={'city': 'store_city'}). \
+    rename(columns={'state': 'store_state'})
 #sku
 skuDF = pd.read_csv('/home/kiran/km/km_hadoop/data/data_rtl_sku.csv')
 
@@ -81,10 +83,23 @@ txnsStoresSkuDF[txnsStoresSkuDF["sku_id"]==3456]. \
 #group by state, sku_id
 soldStoreStateSkuDF = txnsStoresSkuDF.groupby(["store_state", "sku_id"]).agg({'qty' : 'sum'}).reset_index()
 
+soldStoreStateSkuDF.head()
+
+from tabulate import tabulate
+print(tabulate(soldStoreStateSkuDF, headers='keys', tablefmt='psql'))
+
+#This prints only header
+#for rec in soldStoreStateSkuDF:
+#    print(rec)
+
+
+
+
 #Get matplotlib
 import matplotlib
 #%matplotlib inline
 #ipython = get_ipython()
 
-soldStoreStateSkuDF.plot()
-matplotlib.pyplot.show(block=True)
+
+#soldStoreStateSkuDF.plot()
+#matplotlib.pyplot.show(block=True)

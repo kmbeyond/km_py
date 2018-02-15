@@ -19,7 +19,7 @@ Steps:
 -Total Qty by Date, Store, Sku for specific Sku
 -Total Qty by Store, Sku
 
-spark submit in local (use py3.5 because 3.6 gives error):
+spark submit in local (AND use py3.5 because 3.6 gives error with Spark<=2.1.0):
 source activate py35
 spark-submit --master local ~/km/km_py/uc_spark_txns_sku_store.py
 
@@ -44,7 +44,7 @@ from pyspark.sql import SparkSession
 #def main():
     #using Spark session (in spark-submit only)
 spark = SparkSession.builder \
-    .master("yarn") \
+    .master("local") \
     .appName("Txns SKU Store") \
     .getOrCreate()
 

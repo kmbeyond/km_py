@@ -15,31 +15,36 @@ def add_two_num():
 
 
 print(callMethod(add_two_num))
-
+# => 10
+#---------------
 
 #lambda functions
 print((lambda x: x*2)(7))
 # => 14
+
 #The above is same as:
 def f(x):
     return x*2
 
 f(5)
 
+#---------------
 
 print(callMethod(lambda: 4+8))
 #=> 12
 
+
+#---------------
 #Print even numbers from List
-my_list=[11,44,33,66,88,99]
+my_list=[11,22,44,33,66,88,99]
 
 #using list operation
 print([x for x in my_list if x%2==0])
 
-#using lambda
+#using filter & lambda
 print(list(filter(lambda x: x%2==0, my_list)))
 
-#using filter()
+#using filter() & function
 def not_even(x):
     return x if x%2==0 else None
 
