@@ -12,7 +12,7 @@ def print_dir_iter_contents(sPath):
     for sChild in os.listdir(sPath):
         sChildPath = os.path.join(sPath,sChild)
         if os.path.isdir(sChildPath):
-            print_directory_contents(sChildPath)
+            list_dir_contents(sChildPath)
         else:
             print(sChildPath)
 
@@ -49,11 +49,11 @@ def print_files(sPath):
 
 
 print("cwd: {}".format(os.getcwd()))
-print("terminal: {}".format(os.ctermid()))
+#print("terminal: {}".format(os.ctermid()))
 
 
 #files = list_files("/home/kiran")
-files = list_dir_contents("/home/kiran")
+files = list_dir_contents("C:\\")
 for f in files:
     print(f)
 

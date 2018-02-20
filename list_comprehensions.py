@@ -17,7 +17,7 @@ squares = [x**2 for x in range(10)]
 print(squares)
 
 
-
+import numpy as np
 
 A = np.array([1,2,3,4])
 

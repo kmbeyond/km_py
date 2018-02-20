@@ -16,8 +16,16 @@ print("Method: {}".format(__name__))
 
 import sys
 
+#using index
+print("Print using index:")
 for l in range(len(sys.argv)):
     print("argv[{}] : {}".format(l, sys.argv[l]))
+
+#using value assignment
+print("Print using value:")
+for entry in sys.argv[1:]:
+    print("args:  {}".format( entry))
+
 
 
 #Define method to print list

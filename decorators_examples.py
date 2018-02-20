@@ -24,6 +24,11 @@ def my_function_no_args():
 
     
 my_function_no_args()
+'''Output:
+function calling..
+I'm real function with no args
+function completed
+'''
 
 #---------------------
 

@@ -14,10 +14,10 @@ class Student:
             self.marks = []
             for x in marks:
                 self.marks.append(x)
-        print("Called: constructor on :{}".format(self.name))
+        print("Called: constructor on: {}".format(self.name))
 
     def __del__(self):
-        print("Called: destructor on :{}".format(self.name))
+        print("Called: destructor on: {}".format(self.name))
         self.marks=[]
         pass
 
@@ -44,14 +44,14 @@ class Student:
     def tellYourSchool_staticMethod(): #This passes no object
         print("staticmethod: I'm going to school")
 
-    def friend(self, name):
+    def classMate(self, name):
         return Student(name, self.school, [])
 
     @classmethod
     def friend_classMethod(cls, origin, name):
         return cls(name, origin.school, [])
 
-
+print("----- Creating instance-----")
 anna = Student("Anna", "MIT", [60])
 print(anna.marks)
 anna.marks.append(80)
@@ -63,14 +63,14 @@ print(anna.average())
 
 anna.tellYourSchool()
 
-#call classmethod
+print("----- call classmethod ---")
 Student.tellYourSchool_classMethod()
 
-#call staticmethod
+print("----- call staticmethod ---")
 Student.tellYourSchool_staticMethod()
 
-
-andy=anna.friend("Andy")
+print("--- Return friend's instance using classMate()---")
+andy=anna.classMate("Andy")
 andy.printMe()
 andy.marks.append([60,90])
 andy.printMe()
@@ -78,7 +78,7 @@ andy.printMe()
 print("anna is instance of Student: {}".format(isinstance(anna, Student)))
 print("andy is instance of Student: {}".format(isinstance(andy, Student)))
 
-print("Explicitly destroying object...")
+print("--- Explicitly destroying object ---")
 andy=None
 del anna
-print("Explicit destroy completed.")
+print("--- Explicit destroy completed ---")

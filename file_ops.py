@@ -2,15 +2,15 @@
 
 #read file, split & load into list
 AllWords = []
-for line in open("/home/kiran/km/km_hadoop/data/data_wordcount.txt"):
+#for line in open("/home/kiran/km/km_hadoop/data/data_wordcount.txt"):
+for line in open("C:\km\hadoop\data\data_wordcount.txt"):
     row = line.split(' ')
     AllWords+=list(row)
 
-
-
-#for word in AllWords:
-#    print(word)
-
+print("------- words put into list ---------")
+for word in AllWords:
+    print(word)
+print("------- words put into list Complete---------")
 #for i in range(len(AllWords)):
 #    print("{} = {}".format(i, AllWords[i]))
 
@@ -20,7 +20,8 @@ for line in open("/home/kiran/km/km_hadoop/data/data_wordcount.txt"):
 #Option#1
 sFullString=""
 flgPeriod=False
-with open("/home/kiran/km/km_hadoop/data/data_wordcount_op.txt", 'a') as file:
+#with open("/home/kiran/km/km_hadoop/data/data_wordcount_op.txt", 'a') as file:
+with open("C:\km\hadoop\data\data_wordcount_op.txt", 'a') as file:
     for i in range(len(AllWords)):
         if("." in AllWords[i]):
             #AllWords.insert(i, "*")
@@ -28,10 +29,10 @@ with open("/home/kiran/km/km_hadoop/data/data_wordcount_op.txt", 'a') as file:
 
         if(i%3==0 or flgPeriod):
             #file.write("\n"+AllWords[i].strip('\n'))
-            sFullString+="\n"+AllWords[i].strip('\n')
+            sFullString+="\n"+AllWords[i].strip("\n")
         else:
             #file.write(" "+AllWords[i].strip('\n'))
-            sFullString+=" "+AllWords[i].strip('\n')
+            sFullString+=" "+AllWords[i].strip("\n")
         flgPeriod=False
 
 print(sFullString)
@@ -42,7 +43,8 @@ print("******Option#2************")
 sFullString=""
 line_breaker=3
 i=1
-with open("/home/kiran/km/km_hadoop/data/data_wordcount_op.txt", 'a') as file:
+#with open("/home/kiran/km/km_hadoop/data/data_wordcount_op.txt", 'a') as file:
+with open("C:\km\hadoop\data\data_wordcount_op.txt", 'a') as file:
     for word in AllWords:
         if("." in word or i==line_breaker):
             file.write(word.strip('\n')+"\n")
