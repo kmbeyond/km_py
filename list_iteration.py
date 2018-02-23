@@ -1,32 +1,25 @@
 
 
-d = {'x': 1, 'y': 2, 'z': 3}
-
-print("------for loop by keys")
-for k in d:
-    print(k, '--->', d[k])
-
-'''
-x ---> {'x': 1, 'z': 3, 'y': 2}
-z ---> {'x': 1, 'z': 3, 'y': 2}
-y ---> {'x': 1, 'z': 3, 'y': 2}
-'''
 
 
-print("------items")
-for k in d.items():
-    print(k, '--->', d)
-'''
-('z', 3) ---> {'z': 3, 'y': 2, 'x': 1}
-('y', 2) ---> {'z': 3, 'y': 2, 'x': 1}
-('x', 1) ---> {'z': 3, 'y': 2, 'x': 1}
-'''
+lst = [1, 2 , 6, 1, 4, 3]
+
+print("----- List: read value")
+for i in lst:
+    print(i)
+
+print("----- List: using index")
+for i in range(len(lst)):
+    print("{} - {}".format(i, lst[i]))
 
 
-'''
-print("------iteritems")
-for k in d.iteritems():
-    print (k, '--->', d)
 
-'''
+
+print("------ set: ordered & unique")
+lstSet = set(lst)
+
+for i in lstSet:
+    print(i)
+
+#NOTE: lstSet[0] gives TypeError: 'set' object does not support indexing
 

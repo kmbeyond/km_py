@@ -29,13 +29,13 @@ else:
 
 
 print("----- search: Extract only date -------")
-regex = r".* ([a-zA-Z]+) (\d+)[,]? (\d{4})"
+regex = r".* ([a-zA-Z]+) (\d){1,2}[,]? (\d{4})"
 #.* - (Optional) 0 or more repetion of any character
 #([a-zA-Z]+) - group of 1 or more repetition of upper or lower case character
 #(\d+) - group to 1 or more repetition of decimal
 #[,]? - comma for 0 or 1 repetion (due to ?)
 #(\d{4}) - group of exactly 4 decimals
-sDateMon = "Date: Jan 24, 2018 Wednesday"
+sDateMon = "Date: Jan 4, 2018 Wednesday"
 if re.search(regex, sDateMon):
     match = re.search(regex, sDateMon)
     print("Match at index %s, %s" % (match.start(), match.end()))
@@ -52,6 +52,18 @@ if re.search(regex, sDateMon):
 else:
     # If re.search() does not match, then None is returned
     print("The regex pattern does not match. :(")
+
+print("----- search: Extract date in single group-------")
+#Get whole date in single group
+regex = r".* ([a-zA-Z]+ \d{1,2}[,]? \d{4})"
+if re.search(regex, sDateMon):
+    match = re.search(regex, sDateMon)
+    print("Full match/group(0): %s" % (match.group(0)))
+    # So this will print "June"
+    print("Month/group(1): %s" % (match.group(1)))
+else:
+    print("The regex pattern does not match. :(")
+
 
 #get a string before -egg
 match = re.search(r'(\w+)[-]{1}.*', 'spam-egg')
@@ -79,4 +91,3 @@ for ind, val in matches:
 
 print("----- sub: search & replace")
 #re.sub(pattern, repl, string, max=0)
-

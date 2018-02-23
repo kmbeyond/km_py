@@ -37,6 +37,9 @@ for i in range( iMaxRows ):
         aMyArrayTemp.append("")
     aMyArrayTrsp.append(aMyArrayTemp)
 
+#TRY THIS
+#aMyArrayTemp = [x[:] for x in [[1] * iMaxRows] * iMaxCols]
+
 print ("transposing..")
 for i in range( iMaxRows ):
     for j in range(iMaxCols):

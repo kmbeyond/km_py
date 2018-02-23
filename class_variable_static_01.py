@@ -22,7 +22,7 @@ p2.num_eyes = 3
 print(p2.num_eyes) #=> 3; because this creates an instance variable; static is not changed
 print(p1.num_eyes) #=> 1; because any change by p2 doesn't change the static
 #= > 1
-
+print(Person.num_eyes) #=> 1
 
 
 
@@ -79,4 +79,3 @@ print("Initializing the staticList using f1:")
 f1.staticList = [11,22]
 print(f1)
 print(Foo.staticList)
-

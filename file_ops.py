@@ -7,6 +7,7 @@ for line in open("C:\km\hadoop\data\data_wordcount.txt"):
     row = line.split(' ')
     AllWords+=list(row)
 
+
 print("------- words put into list ---------")
 for word in AllWords:
     print(word)
@@ -15,7 +16,7 @@ print("------- words put into list Complete---------")
 #    print("{} = {}".format(i, AllWords[i]))
 
 
-
+'''
 #insert newline after every words in a file
 #Option#1
 sFullString=""
@@ -36,7 +37,7 @@ with open("C:\km\hadoop\data\data_wordcount_op.txt", 'a') as file:
         flgPeriod=False
 
 print(sFullString)
-
+'''
 
 #Option#2
 print("******Option#2************")
