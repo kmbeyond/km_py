@@ -1,16 +1,40 @@
 
-import pandas as pd
-#dir(pd)
 
-dfMovies = pd.read_csv("C:\\Users\\kiran\\Downloads\\assignment\\ml-1m\\movies.dat",
+'''
+Kiran: 2/25/2017
+
+Data:
+
+movies.dat
+MovieID::Title::Genres
+
+users.dat
+UserID::Gender::Age::Occupation::Zip-code
+
+ratings.dat
+UserID::MovieID::Rating::Timestamp
+
+#/home/kiran/km/km_hadoop/data/ml-1m
+'''
+
+import pandas as pd
+
+#1
+#dfMovies = pd.read_csv("C:\\Users\\kiran\\Downloads\\assignment\\ml-1m\\movies.dat",
+dfMovies = pd.read_csv("/home/kiran/km/km_hadoop/data/ml-1m/movies.dat",
                        header = None, delimiter="::", names=["MovieID", "Title", "Genres"])
 #dfMovies.dtypes
 
-dfRatings = pd.read_csv("C:\\Users\\kiran\\Downloads\\assignment\\ml-1m\\ratings.dat", header = None, delimiter="::", names=["UserID", "MovieID", "Rating", "Timestamp"])
+#dfRatings = pd.read_csv("C:\\Users\\kiran\\Downloads\\assignment\\ml-1m\\ratings.dat",
+dfRatings = pd.read_csv("/home/kiran/km/km_hadoop/data/ml-1m/ratings.dat",
+                        header = None, delimiter="::", names=["UserID", "MovieID", "Rating", "Timestamp"])
 
-dfUsers = pd.read_csv("C:\\Users\\kiran\\Downloads\\assignment\\ml-1m\\users.dat",
+#dfUsers = pd.read_csv("C:\\Users\\kiran\\Downloads\\assignment\\ml-1m\\users.dat",
+dfUsers = pd.read_csv("/home/kiran/km/km_hadoop/data/ml-1m/users.dat",
     header = None, delimiter="::", names=["UserID", "Gender", "Age", "Occupation", "Zip-code"])
 
+
+#2
 dfRatingsUsers = dfRatings.merge(dfUsers)
 dfRatingsUsersMovies = dfRatingsUsers.merge(dfMovies)
 

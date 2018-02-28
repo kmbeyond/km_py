@@ -22,6 +22,7 @@ Steps:
 spark submit in local (AND use py3.5 because 3.6 gives error with Spark<=2.1.0):
 source activate py35
 spark-submit --master local ~/km/km_py/uc_spark_txns_sku_store.py
+deactivate
 
 #on commandline
 pyspark --master local
@@ -49,7 +50,7 @@ spark = SparkSession.builder \
     .getOrCreate()
 
     # .config("spark.some.config.option", "some-value") \
-
+'''
 txnsDF = spark.read.format("csv").option("header","true"). \
     load('/home/kiran/km/km_hadoop/data/data_rtl_txns.csv')
 
@@ -59,6 +60,16 @@ storesDF = spark.read.format("csv").option("header","true"). \
 
 skuDF = spark.read.format("csv").option("header","true"). \
     load('/home/kiran/km/km_hadoop/data/data_rtl_sku.csv')
+'''
+
+txnsDF = spark.read.option("header","true").csv("/home/kiran/km/km_hadoop/data/data_rtl_txns.csv")
+
+storesDF = spark.read.option("header","true").csv("/home/kiran/km/km_hadoop/data/data_rtl_stores.csv"). \
+    withColumnRenamed('addr1', 'store_addr1').withColumnRenamed('city', 'store_city').withColumnRenamed('state', 'store_state')
+
+skuDF = spark.read.option("header","true").csv("/home/kiran/km/km_hadoop/data/data_rtl_sku.csv")
+
+
 
 '''
 
@@ -142,11 +153,13 @@ soldStoreStateSkuDF.show()
 #group by store_state
 soldStoreStateSkuDF.show()
 
+'''
 import matplotlib
 #%matplotlib inline
 txnsStoresSkuDFGph.plot()
 matplotlib.pyplot.show(block=True)
 
+'''
 
 
 #if __name__ == "__main__":

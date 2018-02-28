@@ -30,11 +30,14 @@ storesDF = pd.read_csv("/home/kiran/km/km_hadoop/data/data_rtl_stores.csv"). \
     rename(columns={'addr1': 'store_addr1'}). \
     rename(columns={'city': 'store_city'}). \
     rename(columns={'state': 'store_state'})
+
 #sku
 skuDF = pd.read_csv('/home/kiran/km/km_hadoop/data/data_rtl_sku.csv')
 
-
-
+print(skuDF.head(10))
+print(skuDF.keys())
+print("count: \n{}".format(skuDF.count()))
+print("size: {}".format(skuDF.size))
 
 #Extract date from datetime string
 from datetime import datetime
