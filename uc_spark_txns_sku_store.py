@@ -22,7 +22,7 @@ Steps:
 spark submit in local (AND use py3.5 because 3.6 gives error with Spark<=2.1.0):
 source activate py35
 spark-submit --master local ~/km/km_py/uc_spark_txns_sku_store.py
-deactivate
+source deactivate
 
 #on commandline
 pyspark --master local
