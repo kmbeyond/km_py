@@ -1,9 +1,9 @@
-
+#Read file
 
 #read file, split & load into list
 AllWords = []
-#for line in open("/home/kiran/km/km_hadoop/data/data_wordcount.txt"):
-for line in open("C:\km\hadoop\data\data_wordcount.txt"):
+for line in open("/home/kiran/km/km_big_data/data/data_wordcount.txt"):
+#for line in open("C:\km\hadoop\data\data_wordcount.txt"):
     row = line.split(' ')
     AllWords+=list(row)
 
@@ -16,12 +16,13 @@ print("------- words put into list Complete---------")
 #    print("{} = {}".format(i, AllWords[i]))
 
 
+#insert newline after every n words & write into a file
+
 '''
-#insert newline after every words in a file
 #Option#1
 sFullString=""
 flgPeriod=False
-#with open("/home/kiran/km/km_hadoop/data/data_wordcount_op.txt", 'a') as file:
+#with open("/home/kiran/km/km_big_data/data/data_wordcount_op.txt", 'a') as file:
 with open("C:\km\hadoop\data\data_wordcount_op.txt", 'a') as file:
     for i in range(len(AllWords)):
         if("." in AllWords[i]):
@@ -44,8 +45,8 @@ print("******Option#2************")
 sFullString=""
 line_breaker=3
 i=1
-#with open("/home/kiran/km/km_hadoop/data/data_wordcount_op.txt", 'a') as file:
-with open("C:\km\hadoop\data\data_wordcount_op.txt", 'a') as file:
+with open("/home/kiran/km/km_big_data/data/data_wordcount_op.txt", 'a') as file:
+#with open("C:\km\hadoop\data\data_wordcount_op.txt", 'a') as file:
     for word in AllWords:
         if("." in word or i==line_breaker):
             file.write(word.strip('\n')+"\n")
