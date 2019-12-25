@@ -13,7 +13,7 @@ y ---> {'x': 1, 'z': 3, 'y': 2}
 
 print("------items(): reads key & val as tuple")
 for k in d.items():
-    print(k, '--->', d)
+    print(k)
 '''
 ('z', 3) ---> {'z': 3, 'y': 2, 'x': 1}
 ('y', 2) ---> {'z': 3, 'y': 2, 'x': 1}

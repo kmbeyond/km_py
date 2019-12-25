@@ -21,7 +21,7 @@ app = Flask(__name__)
 app.secret_key = 'kmkey'
 api = Api(app)
 
-jwt = JWT(app, authenticate, identity) #/auth
+#jwt = JWT(app, authenticate, identity) #/auth
 
 api.add_resource(ProductsMfg, '/productsmfg') #http://127.0.0.1:5000/productsmfg
 #api.add_resource(ProductsMfg, '/productsmfg/<string:name>') #http://127.0.0.1:5000/productsmfg/PRD-001

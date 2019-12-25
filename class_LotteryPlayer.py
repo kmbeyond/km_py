@@ -12,10 +12,8 @@ class LotteryPlayer:
         self.name=name,
         self.numbers=(5,6,3,8)
         #self.play_limit=1500
-
     def total(self):
         return sum(self.numbers)
-
     def __str__(self):
         return "name= {}; numbers= {}; date={}".format(self.name, self.numbers, self.play_limit)
 

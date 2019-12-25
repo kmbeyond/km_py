@@ -4,15 +4,35 @@ import re
 print("------ Pattern matching ------")
 
 print("----- match -------")
+emailString='Email address is abc@abc.com, my phone is (123)22-3444; alternate email abc2@abc.com.'
+print("Words (non-whitespace)=                          " , re.findall(r'[^ ]+',emailString))
+print("Words (non-whitespace & strip ending chars(.,))= " , re.findall(r'[^ ]+[^., ]+',emailString))
+
+print("Words (\w OR [a-zA-Z0-9_])=       " , re.findall(r'[\w]+', emailString))
+print("Words (\w and @.()-)= " , re.findall(r'[\w@.()-]+', emailString))
+
+print("Email addresses matched= " , re.findall(r'[a-zA-Z0-9_]+@[a-zA-Z0-9_.]+[^., \t]+', emailString))
+print("Email addresses matched= " , re.findall(r'.*?([a-zA-Z0-9_.]+@[a-zA-Z0-9_.]+).*?', emailString))
+
+print("Words of 5 chars= ",re.findall(r'\b[\w]{5}\b', emailString) ) #Gives first 5 characters of words if \b not used
+print("Words of 5 chars= ",re.findall(r'\b(\w{5})\b', emailString) )
+
+sPhone1='My Ph#: Home: (123)222-3444, Off: (123)222-3444'
+sPhone2='My Ph#: Home: 222-222-3444, Off: 333-222-3444'
+sPhone3='My Ph#: Home: 222.222.3444, Off: 333.222.3444'
+print("Phone#s= " , re.findall(r'\(?[\d]{3}[)-.]*[\d]{3}[-.][\d]{4}', sPhone1)  )
+print("Phone#s= " , re.findall(r'.*?(\(?\d{3}\D{0,3}\d{3}\D{0,3}\d{4}).*?', sPhone1)  )
+#---match() returns True or False for matches
 #re.match(pattern, string, flags=0)
+print("Phone# match= " , re.match(r'.*[(]*[\d]{3}[)-.]*[\d]{3}[-.][\d]{4}.*', sPhone1)  )
 sPhone='414-217-2655'
-if re.match(r'.*[ ]*(\d{3})-(\d{3})-(\d{4})[ ]*.*$', sPhone):
+if re.match(r'.*[ ]*(\d{3})-(\d{3})-(\d{4})[ ]*.*$', sPhone2):
     print("phone number is good")
 else:
     print("Bad phone number format")
 
 regexMatch =  r'(.*) are (.*?) .*'
-#(.*) - group of 0 or more repetion of any character
+#(.*) - group of 0 or more repetition of any character
 # (.*?) - group of 0 or1 repetition of a string
 #.* - 0 or more repetion of any character
 line = "Cats222 are smarter33 than44 dogs"

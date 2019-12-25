@@ -37,7 +37,7 @@ class UserModel:
 
         conn = pymysql.connect(host="localhost",  # your host
                      user="km",       # username
-                     passwd="km@1234",     # password
+                     passwd="Kiran$5july@123",     # password
                      db="mycompany")   # name of the database
 
         # Create a Cursor object to execute queries.
