@@ -20,7 +20,7 @@ with open("/home/kiran/km/km_big_data/data/data_scala_users_email_output.txt", '
   for line in fpr:
    result = re_email.findall(line)
    print(result)
-   #for i in result: fpa.write(str(i)+"\n")
+   for i in result: fpa.write(str(i)+"\n")
 
 fpa.close()
 fpr.close()

@@ -32,7 +32,8 @@ dtISOformat = datetime.now().isoformat()
 #=> 2017-12-20T08:59:37.145674
 
 #current time in milliseconds
-int(round(time.time() * 1000))
+import time
+print("time in milliseconds=", int(round(time.time() * 1000)) )
 
 
 
