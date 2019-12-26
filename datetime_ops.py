@@ -1,7 +1,4 @@
 
-#Time formatting
-fmt = '%Y-%m-%d %H:%M:%S %Z%z'
-#=> 2002-10-27 12:00:00 CET+0100
 
 
 ##using now() to get current datetime
@@ -13,6 +10,11 @@ from datetime import datetime
 now = datetime.now()
 print("Current datetime: {}".format( now ) )
 #=> Current datetime: 2017-12-20 08:42:26.178157
+
+
+#Time formatting
+fmt = '%Y-%m-%d %H:%M:%S %Z%z'
+#=> 2002-10-27 12:00:00 CET+0100
 
 dtFormatted = datetime.now().strftime( fmt )
 print("Current datetime formatted: {}".format( dtFormatted ) )
@@ -56,7 +58,7 @@ datetime.now(cst).strftime(fmt)
 #=> 2017-12-20 09:31:56 CST-0600
 
 chicagotz = pytz.timezone('America/Chicago')
-datetime.now(chicagotz).strftime(fmt)
+print("America/Chicago=", datetime.now(chicagotz).strftime(fmt))
 #=> 2017-12-20 09:33:56 CST-0600
 
 latz = pytz.timezone('America/Los_Angeles')
@@ -65,6 +67,7 @@ datetime.now(latz).strftime(fmt)
 
 #Time diff
 timediff = ((datetime.now(timezone.utc)-datetime.now(cst)))
+print("Time diff=", timediff)
 
 import time
 print("GMT: {}".format( time.strftime("%Y-%m-%d %H:%M:%S", time.gmtime()) ))

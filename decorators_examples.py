@@ -10,6 +10,7 @@ import functools
 
 
 #---------------------
+#decorator
 def my_decorator_no_args(func):
     @functools.wraps(func)
     def run_function():

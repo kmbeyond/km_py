@@ -16,7 +16,7 @@ print("------- words put into list Complete---------")
 #    print("{} = {}".format(i, AllWords[i]))
 
 
-#insert newline after every n words & write into a file
+#insert every n words or period in a row & write into a file
 
 '''
 #Option#1
@@ -51,11 +51,10 @@ with open("/home/kiran/km/km_big_data/data/data_wordcount_op.txt", 'a') as file:
         if("." in word or i==line_breaker):
             file.write(word.strip('\n')+"\n")
             sFullString+=word.strip('\n')+"\n"
-            i=0
+            i=1
         else:
             file.write(word.strip('\n')+" ")
             sFullString+=word.strip('\n')+" "
-
-        i+=1
+            i+=1
 
 print(sFullString)

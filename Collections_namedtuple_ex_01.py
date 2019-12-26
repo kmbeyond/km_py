@@ -4,7 +4,7 @@ from collections import namedtuple
 
 
 
-empRec = namedtuple('EmployeeRec', 'name, age, title, department, paygrade')
+empRec = namedtuple('EmployeeRec', 'name, age, title, department, paygrade', verbose=True)
 
 
 e1 = empRec("John", 25, "Engineer", "IT", "A2")

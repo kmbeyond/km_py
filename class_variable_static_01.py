@@ -5,24 +5,24 @@ print("------------ Simple Class attributes -------")
 class Person:
     num_eyes = 2
 
-print(Person.num_eyes)
+print("Person.num_eyes=",Person.num_eyes)
 #=> 2
 
 p1 = Person()
-print(p1.num_eyes)
+print("p1.num_eyes=", p1.num_eyes)
 #= > 2
 
 Person.num_eyes = 1
 p2 = Person()
-print(p2.num_eyes)
+print("p2.num_eyes=", p2.num_eyes)
 #=> 1
 
 #Change value using the instance
 p2.num_eyes = 3
-print(p2.num_eyes) #=> 3; because this creates an instance variable; static is not changed
-print(p1.num_eyes) #=> 1; because any change by p2 doesn't change the static
+print("p2.num_eyes=",p2.num_eyes) #=> 3; because this creates an instance variable; static is not changed
+print("p1.num_eyes=", p1.num_eyes) #=> 1; because any change by p2 doesn't change the static
 #= > 1
-print(Person.num_eyes) #=> 1
+print("Person.num_eyes=", Person.num_eyes) #=> 1
 
 
 

@@ -18,7 +18,7 @@ for word, cnt in wordsCountDict:
     print("{} - {}".format(word, cnt))
 
 
-
+print("-------")
 #from keyword args
 
 wordsCountDict = cl.Counter(cats=4, dogs=8)             # a new counter from keyword args

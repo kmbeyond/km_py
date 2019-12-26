@@ -1,20 +1,22 @@
 
+#Get sqrsList list
 
-#Get squares list (usual way)
-squares = []
-for x in range(10):
-    squares.append(x**2)
-print(squares)
+#Method#1: usual way
+sqrsList = []
+for x in lst:
+    sqrsList.append(x**2)
 
-#OR
-squares = list(map(lambda x: x**2, range(10)))
-print(squares)
+for v in sqrsList: print(v)
+
+#Method#2: map()
+sqrsList = list(map(lambda x: x**2, lst))
+print(sqrsList)
 
 
-#***** list comprehensions *****
+#Method#3: list comprehensions *****
 
-squares = [x**2 for x in range(10)]
-print(squares)
+sqrsList = [x**2 for x in lst]
+print(sqrsList)
 
 
 import numpy as np

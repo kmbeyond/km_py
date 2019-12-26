@@ -16,6 +16,10 @@ def add_two_num():
 
 print(callMethod(add_two_num))
 # => 10
+
+print(callMethod(lambda: 4+8))
+#=> 12
+
 #---------------
 
 #lambda functions
@@ -30,8 +34,6 @@ f(5)
 
 #---------------
 
-print(callMethod(lambda: 4+8))
-#=> 12
 
 
 #---------------
@@ -51,6 +53,8 @@ def not_even(x):
 print(list(filter(not_even, my_list)))
 
 
+#print elements at even index using slice
+print("slice=", [x for x in my_list[1::2]])
 
 
 

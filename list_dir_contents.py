@@ -14,7 +14,7 @@ def print_dir_iter_contents(sPath):
         if os.path.isdir(sChildPath):
             list_dir_contents(sChildPath)
         else:
-            print(sChildPath)
+            print("print_dir_iter_contents=", sChildPath)
 
 def list_dir_contents(sPath):
     from os import listdir
@@ -52,15 +52,15 @@ print("cwd: {}".format(os.getcwd()))
 #print("terminal: {}".format(os.ctermid()))
 
 
-#files = list_files("/home/kiran")
-files = list_dir_contents("C:\\")
+files = list_files("/home/kiran")
+#files = list_dir_contents("C:\\")
 for f in files:
     print(f)
 
 #print("-------------listdir-----------")
 #print(os.listdir("/home/kiran"))
 
-#print_dir_iter_contents("/home/kiran")
+print_dir_iter_contents("/home/kiran")
 #print_files("/home/kiran")
 
 
