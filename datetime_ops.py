@@ -20,6 +20,12 @@ dtFormatted = datetime.now().strftime( fmt )
 print("Current datetime formatted: {}".format( dtFormatted ) )
 #=> Current datetime formatted: 2017-12-20 08:44:17
 
+#Convert 12Hr format into 24Hr format
+
+currDT='07:28:12 PM'
+dtObj = datetime.strptime(currDT, '%I:%M:%S %p')
+print("24 hr format ({}) =".format(currDT), dtObj.strftime('%H:%M:%S') )
+
 #Convert from date object(s) to String
 sNow = str(now)
 print("Date obj to String: {}".format( sNow ) )
