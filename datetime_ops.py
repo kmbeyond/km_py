@@ -1,50 +1,51 @@
 
+#--------------date-------------
+from datetime import date
+#date only
+date.today().strftime('%Y-%m-%d')
+#=> 2017-12-20
 
 
-##using now() to get current datetime
+#--------------date time ----------------
+from datetime import datetime
+now = datetime.now()
+
+#Convert from date object(s) to String
+#sNow = str(now)
+print("{}".format( now ) )
+#=>2017-12-20 08:36:21.525668
+
+#if library is imported:
 import datetime
 now = datetime.datetime.now()
 print("Current datetime: {}".format( now ) )
 #=> Current datetime: 2017-12-20 08:42:26.178157
 
-#OR
-from datetime import datetime
-now = datetime.now()
-
-#Convert from date object(s) to String
-sNow = str(now)
-print("Date obj to String: {}".format( sNow ) )
-#=>2017-12-20 08:36:21.525668
-
-#Date & Time formatting
-
-#date only
-date.today().strftime('%Y-%m-%d')
-#=> 2017-12-20
-
 dtFormatted = datetime.now().strftime( '%Y-%m-%d %H:%M:%S' )
-print("Current datetime formatted: {}".format( dtFormatted ) )
-#=> Current datetime formatted: 2017-12-20 08:44:17
+print("Current datetime: {}".format( dtFormatted ) )
+#=> Current datetime: 2017-12-20 08:44:17
 
 #Format timezone using '%Y-%m-%d %H:%M:%S %Z%z'
 #=> 2002-10-27 12:00:00 CET+0100
 
+#datetime in ISO format
+dtISOformat = datetime.now().isoformat()
+#=> 2017-12-20T08:59:37.145674
+
+
+#------------Conversion--------------
 
 #Convert 12Hr format into 24Hr format
-
 currDT='07:28:12 PM'
 dtObj = datetime.strptime(currDT, '%I:%M:%S %p')
 print("24 hr format ({}) =".format(currDT), dtObj.strftime('%H:%M:%S') )
-
 
 
 #Convert from date String to object(s)
 dt1 = datetime.strptime("2007-12-25 23:44:56", "%Y-%m-%d %H:%M:%S")
 print("String to Date obj: {}".format( dt1) )
 
-#datetime in ISO format
-dtISOformat = datetime.now().isoformat()
-#=> 2017-12-20T08:59:37.145674
+
 
 #current time in milliseconds
 import time
