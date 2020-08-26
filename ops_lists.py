@@ -107,12 +107,25 @@ print("create list from 5 - 16 step by 2: {}".format(listRange) )
 #=> [5, 7, 9, 11, 13, 15]
 
 
-#Search in a list
+#----- Search in a list -----
 iSearchNum=33
 if(iSearchNum in listNum):
     print( str(iSearchNum)+" is found")
 else:
     print(str(iSearchNum)+" NOT FOUND")
+
+
+#----- search for a string in a list of strings -----
+#lst_columns = spark.table("kmdb.table").columns
+lst_columns = ["mid", "name", "chain_code", "address"]
+
+any("chain" in str for str in lst_columns)
+=> True
+
+#Generate new list of matches using List Comprehension
+[str for str in lst_columns if "chain" in str]
+=> ['chain_code']
+
 
 #Scenario: insert values dynamically
 #loop list using while
