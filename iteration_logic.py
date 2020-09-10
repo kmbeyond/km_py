@@ -6,6 +6,7 @@ def getDT():
 days_total=int(50)
 increments=int(7)
 
+#----Ascend: Low to High
 lowLimit=6
 upperLimit=lowLimit+increments
 
@@ -17,7 +18,8 @@ while lowLimit <= days_total:
  lowLimit=upperLimit+1
  upperLimit=lowLimit+increments
  
- 
+
+ #----Descend: High to Low
 upperLimit=days_total
 lowLimit=upperLimit-increments
 
