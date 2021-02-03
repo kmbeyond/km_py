@@ -29,3 +29,21 @@ while upperLimit >= 1:
  
  upperLimit=lowLimit-1
  lowLimit=upperLimit-increments
+
+ 
+ #----iterate/loop between dates (old date to current)
+increments=int(30)
+sDateFrom='2020-02-05'
+
+lowLimit=1
+upperLimit=lowLimit+increments
+s_dt_from = (date.today()-timedelta(upperLimit)).strftime('%Y-%m-%d')
+
+while s_dt_from > sDateFrom:
+ s_dt_from = (date.today()-timedelta(upperLimit)).strftime('%Y-%m-%d')
+ s_dt_to = (date.today()-timedelta(lowLimit)).strftime('%Y-%m-%d')
+ s_dt_from = sDateFrom if sDateFrom>s_dt_from else s_dt_from
+ print("{}:  ---> Days Range: {}({}) - {}({})".format(getDT(), s_dt_from, lowLimit, s_dt_to, upperLimit) )
+ lowLimit=upperLimit+1
+ upperLimit=lowLimit+increments
+ 
