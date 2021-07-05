@@ -1,4 +1,5 @@
 
+lst = [ 3, 5, 9]
 #Get sqrsList list
 
 #Method#1: usual way
