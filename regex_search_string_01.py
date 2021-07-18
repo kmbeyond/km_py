@@ -2,11 +2,12 @@ import re
 
 
 print("------ Pattern matching ------")
+emailString='Email address is abc@abc.com, my phone is (123)22-3444; alternate email abc2@abc.com.'
+print('STRING: '+emailString+'\n\n')
 
 print("----- match -------")
-emailString='Email address is abc@abc.com, my phone is (123)22-3444; alternate email abc2@abc.com.'
 print("Words (non-whitespace)=                          " , re.findall(r'[^ ]+',emailString))
-print("Words (non-whitespace & strip ending chars(.,))= " , re.findall(r'[^ ]+[^., ]+',emailString))
+print("Words (non-whitespace & strip ending chars(.,;))= " , re.findall(r'[^ ]+[^.,; ]+',emailString))
 
 print("Words (\w OR [a-zA-Z0-9_])=       " , re.findall(r'[\w]+', emailString))
 print("Words (\w and @.()-)= " , re.findall(r'[\w@.()-]+', emailString))
@@ -17,11 +18,21 @@ print("Email addresses matched= " , re.findall(r'.*?([a-zA-Z0-9_.]+@[a-zA-Z0-9_.
 print("Words of 5 chars= ",re.findall(r'\b[\w]{5}\b', emailString) ) #Gives first 5 characters of words if \b not used
 print("Words of 5 chars= ",re.findall(r'\b(\w{5})\b', emailString) )
 
+lst_phones=[
+'My Ph#: Home: (123)222-3444, Off: (123)222-3444',
+'My Ph#: Home: 222-222-3444, Off: 333-222-3444',
+'My Ph#: Home: 222.222.3444, Off: 333.222.3444'
+]
+for itm in lst_phones:
+    print('-->', itm, ': ', str(re.findall(r'\(?[\d]{3}[)-.]*[\d]{3}[-.][\d]{4}', itm)) )
+
+
 sPhone1='My Ph#: Home: (123)222-3444, Off: (123)222-3444'
 sPhone2='My Ph#: Home: 222-222-3444, Off: 333-222-3444'
 sPhone3='My Ph#: Home: 222.222.3444, Off: 333.222.3444'
-print("Phone#s= " , re.findall(r'\(?[\d]{3}[)-.]*[\d]{3}[-.][\d]{4}', sPhone1)  )
+
 print("Phone#s= " , re.findall(r'.*?(\(?\d{3}\D{0,3}\d{3}\D{0,3}\d{4}).*?', sPhone1)  )
+
 #---match() returns True or False for matches
 #re.match(pattern, string, flags=0)
 print("Phone# match= " , re.match(r'.*[(]*[\d]{3}[)-.]*[\d]{3}[-.][\d]{4}.*', sPhone1)  )
