@@ -15,12 +15,6 @@ now = datetime.now()
 print("{}".format( now ) )
 #=>2017-12-20 08:36:21.525668
 
-#if library is imported:
-import datetime
-now = datetime.datetime.now()
-print("Current datetime: {}".format( now ) )
-#=> Current datetime: 2017-12-20 08:42:26.178157
-
 dtFormatted = datetime.now().strftime( '%Y-%m-%d %H:%M:%S' )
 print("Current datetime: {}".format( dtFormatted ) )
 #=> Current datetime: 2017-12-20 08:44:17
@@ -32,6 +26,15 @@ print("Current datetime: {}".format( dtFormatted ) )
 dtISOformat = datetime.now().isoformat()
 #=> 2017-12-20T08:59:37.145674
 
+#Specific part of datetime
+now.month
+now.year
+
+#Scenario: Print Last Month & Year (Format: 2021-AUG
+last_month = now.month - 1 if now.month > 1 else 12
+last_month_name = ['JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC'][last_month-1]
+year = now.year-1 if last_month == 12 else now.year
+print("Report for:" +str(year)+"-"+last_month_name)
 
 #------------Conversion--------------
 
