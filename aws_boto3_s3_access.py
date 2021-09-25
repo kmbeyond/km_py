@@ -3,8 +3,8 @@
 import boto3
 
 #km1
-access_key = 'AKIAVP2HFGCVOUOKINV6'
-secret_key = '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'
+access_key = ''
+secret_key = ''
 
 conn_s3 = boto3.resource(
     service_name='s3',

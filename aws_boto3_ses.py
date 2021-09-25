@@ -7,8 +7,8 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 #km1
-access_key = 'AKIAVP2HFGCVOUOKINV6'
-secret_key = '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'
+access_key = ''
+secret_key = ''
 
 def km_send_email(to_email, subject, body):
     try:
