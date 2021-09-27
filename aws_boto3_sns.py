@@ -4,7 +4,8 @@ import logging
 import json
 
 # SETUP:
-#User must be authorized to use SNS - add
+#User must be authorized to use SNS - Ex: add AmazonSNSFullAccess policy to user
+
 # logging setup
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
