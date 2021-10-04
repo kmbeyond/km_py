@@ -12,8 +12,8 @@ Created on Wed Nov  8 13:42:46 2017
 import pymysql
 
 conn = pymysql.connect(host="localhost",  # your host
-                     user="root",       # username
-                     passwd="Iamroo@9090",     # password
+                     user="km",       # username
+                     passwd="Kiran$5july@123",     # password
                      db="mycompany")   # name of the database
 
 # Create a Cursor object to execute queries.

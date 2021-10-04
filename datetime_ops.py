@@ -30,7 +30,8 @@ dtISOformat = datetime.now().isoformat()
 now.month
 now.year
 
-#Scenario: Print Last Month & Year (Format: 2021-AUG
+#Scenario: Print Last Month & Year (Format: 2021-AUG)
+now = datetime.now()
 last_month = now.month - 1 if now.month > 1 else 12
 last_month_name = ['JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC'][last_month-1]
 year = now.year-1 if last_month == 12 else now.year
@@ -71,15 +72,15 @@ dtUTC.strftime('%Y-%m-%d %H:%M:%S %z')
 #=> 2017-12-20 14:50:37 +0000
 
 cst = pytz.timezone('US/Central')
-datetime.now(cst).strftime(fmt)
+datetime.now(cst).strftime('%Y-%m-%d %H:%M:%S %z')
 #=> 2017-12-20 09:31:56 CST-0600
 
 chicagotz = pytz.timezone('America/Chicago')
-print("America/Chicago=", datetime.now(chicagotz).strftime(fmt))
+print("America/Chicago=", datetime.now(chicagotz).strftime('%Y-%m-%d %H:%M:%S %z'))
 #=> 2017-12-20 09:33:56 CST-0600
 
 latz = pytz.timezone('America/Los_Angeles')
-datetime.now(latz).strftime(fmt)
+datetime.now(latz).strftime('%Y-%m-%d %H:%M:%S %z')
 #=> m2017-12-20 07:35:01 PST-0800
 
 #Time diff

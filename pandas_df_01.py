@@ -54,6 +54,7 @@ rndDF = DataFrame({ 'k1': ['X', 'X', 'Y', 'Y', 'Z'],
     'dataset2':np.random.randint(5, size=5)})
 
 #----------------------Read from file-------------------------------
+
 #2 ways:
 #****1: using pd
 datadf = pd.read_csv("/home/kiran/km/km_hadoop/data/data_loopback_date.tsv", delimiter='\t', header=0)
