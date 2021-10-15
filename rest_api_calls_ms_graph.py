@@ -33,7 +33,7 @@ print(f"Token: {token}")
 ##https://jwt.io/
 
 #-----SendEmail
-to_email_address="kiran.miryala@fisglobal.com"
+to_email_address=""
 email_subject='TEST PPA email'
 email_body="""TEST PPA email body<br><br><h2>HTML table</h2><table border="1"><tr><th>header</th><tr><td>abcdef</td></tr></table><br><br><br>
 """
@@ -52,7 +52,7 @@ message_data = {
   }
 }
 print(f"message_data: {message_data}")
-to_email_address2_dict = {"emailAddress": {"address": "kiran.miryala@fisglobal.com"}}
+to_email_address2_dict = {"emailAddress": {"address": ""}}
 print(f"Add emailAddress: {to_email_address2_dict}")
 message_data['message']['toRecipients'].append(to_email_address2_dict)
 
