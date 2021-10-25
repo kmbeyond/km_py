@@ -1,5 +1,5 @@
 
-from werkzeug.security import safe_str_cmp
+#from werkzeug.security import safe_str_cmp
 #import our custom user class
 from models.user import UserModel
 

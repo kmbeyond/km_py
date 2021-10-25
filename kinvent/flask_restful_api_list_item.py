@@ -11,7 +11,7 @@ app = Flask(__name__)
 app.secret_key = 'kmkey'
 api = Api(app)
 
-#jwt = JWT(app, authenticate, identity) #/auth
+jwt = JWT(app, authenticate, identity) #/auth
 
 #All Item & ItemList are moved to the resources, models packages
 
