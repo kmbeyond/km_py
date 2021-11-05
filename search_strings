@@ -1,0 +1,29 @@
+
+
+#--------search for string in string
+'key1' in 'abckey1xyz'
+=> True
+
+#--------search for string in list
+list_data = ['abkey3','bckey1','dfkey4']
+
+[s for s in list_data if 'key1' in s]
+[s for s in list_data if ('key1' in s or 'key2' in s or 'key3' in s)]
+
+
+#------search for keywords that are in list
+keywords = ['key1','key2','key3']
+
+#NOT WORKING: [s for s in list_data if all(s for key in keywords if key in s)]
+
+import re
+pre_compiled = re.compile('|'.join(map(re.escape, keywords)))
+[itm for itm in list_data if pre_compiled.search(itm)]
+
+
+#------use case
+#--search for string in column names
+list_columns = spark.table("kmdb.mytable").columns
+
+[s for s in list_columns if 'tran_type' in s]
+
