@@ -10,7 +10,7 @@
 
 #string data
 result="1.2|1.3|1.5|1.336565|1.26|1.28|1.45|1.56^2.3|2.5|2.6|2.1355435|null|2.43|2.55|2.56^3.4|3.5|3.9|3.14|3.27|3.25|3.34|3.42^"
-result="TYPE1|CAT1|SUBCAT1|1.336565|1.42|1.28|1.45|1.56^TYPE2|CAT1|SUBCAT1|2.3355435|null|2.43|2.55|2.56^TYPE1|CAT2|SUBCAT2|3.44|3.27|3.25|3.34|3.42^TYPE1|CAT3|SUBCAT1|4.33|4.27|4.25|4.34|4.42^"
+result="TYPE1|CAT1|SUBCAT1|1.336565|1.42|1.28|1.45|1.56^TYPE1|CAT1|SUBCAT1|1.336565|1.42|1.28|1.45|1.56^TYPE2|CAT1|SUBCAT1|2.3355435|null|2.43|2.55|2.56^TYPE1|CAT2|SUBCAT2|3.44|3.27|3.25|3.34|3.42^TYPE1|CAT3|SUBCAT1|4.33|4.27|4.25|4.34|4.42^"
 #result=""
 
 replace_chars = "[(',)]"
@@ -29,7 +29,8 @@ def get_report_year_month():
     return "-".join([str(dtNow.year), months[dtNow.month-1]])
 
 def generate_message_body(raw_string):
-    rows = [x for x in result.split('^') if x]
+    rows = [x for x in raw_string.split('^') if x]
+    #rows = list(set(rows))
     print(rows)
     msg_body = f"Report: {get_report_year_month()}"
     msg_body += "\n\nTYPE,CATEGORY,SUB-CATEGORY,THRESHOLD,MEASURE1,MEASURE2,MEASURE3,MEASURE4\n"
@@ -44,15 +45,15 @@ def generate_message_body(raw_string):
     print(f"FINAL MESSAGE: {msg_body}")
     return(msg_body)
 
-#msg_body = generate_message_body(result)
-#print(msg_body)
+msg_body = generate_message_body(result)
+print(msg_body)
 
 def generate_message_body_report(raw_string):
-    rows = [x for x in result.split('^') if x]
+    rows = [x for x in raw_string.split('^') if x]
     print(rows)
     msg_body = f"<br><br><h3>Report: {get_report_year_month()}</h3>"
-    columns = ['TYPE','CATEGORY','SUB-CATEGORY','THRESHOLD','MEASURE1','MEASURE2','MEASURE3','MEASURE4']
-    msg_body += "<table border=1 cellspacing=0><tr bgcolor='green'><th>"+"<th>".join(columns)+"</tr>"
+    columns = ['<th>TYPE','<th>CATEGORY','<th>SUB-CATEGORY','<th>THRESHOLD','<th>MEASURE1','<th>MEASURE2','<th>MEASURE3','<th>MEASURE4']
+    msg_body += "<table border=1 cellspacing=0><tr bgcolor='abd674'>"+"".join(columns)+"</tr>"
     if len(rows)>0:
         for itm in sorted(rows):
             itm_cols = itm.split('|')
@@ -73,7 +74,7 @@ def generate_message_body_report(raw_string):
 #print(msg_body)
 
 def generate_message_body_report_grouping(raw_string):
-    rows = [x for x in result.split('^') if x]
+    rows = [x for x in raw_string.split('^') if x]
     print(rows)
     for itm in sorted(rows):
         print(itm.split('|')[0] + " -> " + str(itm.split('|')[1:]))
@@ -88,8 +89,8 @@ def generate_message_body_report_grouping(raw_string):
     print(group_by_1)
     #print(len(group_by_1))
     msg_body = f"<br><br><h3>Report: {get_report_year_month()}</h3>"
-    columns = ['TYPE', 'CATEGORY', 'SUB-CATEGORY', 'THRESHOLD', 'MEASURE1', 'MEASURE2', 'MEASURE3', 'MEASURE4']
-    msg_body += "<table border=1 cellspacing=0><tr bgcolor='green'><th width=100>TYPE<th width=150>CATEGORY<th>SUB-CATEGORY<th>THRESHOLD<th>MEASURE1<th>MEASURE2<th>MEASURE3<th>MEASURE4</tr>"
+    columns = ['<th width=100>TYPE', '<th width=150>CATEGORY', '<th>SUB-CATEGORY', '<th align=center>THRESHOLD', '<th>MEASURE1', '<th>MEASURE2', '<th>MEASURE3', '<th>MEASURE4']
+    msg_body += "<table border=1 cellspacing=0><tr bgcolor='abd674'>"+"".join(columns)+"</tr>"
     if len(group_by_1) > 0:
         for k,val in group_by_1.items():
             # print(f'key:{k} -> {len(group_by_1[k])}')
@@ -108,13 +109,11 @@ def generate_message_body_report_grouping(raw_string):
     return(msg_body)
 
 msg_body = generate_message_body_report_grouping(result)
-print(msg_body)
+#print(msg_body)
 
 #write to HTML file
-file_path = "/home/km/km/"
+#file_path = "/home/km/km/"
 with open("zz_report.html", 'w') as file:
     file.write(msg_body)
-
-
 
 
