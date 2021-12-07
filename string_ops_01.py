@@ -45,8 +45,8 @@ def generate_message_body(raw_string):
     print(f"FINAL MESSAGE: {msg_body}")
     return(msg_body)
 
-msg_body = generate_message_body(result)
-print(msg_body)
+#msg_body = generate_message_body(result)
+#print(msg_body)
 
 def generate_message_body_report(raw_string):
     rows = [x for x in raw_string.split('^') if x]
@@ -97,7 +97,7 @@ def generate_message_body_report_grouping(raw_string):
             grp1_spacing = f"<td valign=top rowspan={len(group_by_1[k])}>{k}"
             for itm in val:
                 #print(f"->{itm}")
-                msg_body += "<tr>"+grp1_spacing+ f"<td>{itm[0]}<td>{itm[1]}<td align=right>{round(float(itm[2]), 3) if itm[2].replace('.', '', 1).isdigit() else itm[2]}<td align=right>{('' if 'null' in itm[3] else itm[3])}<td align=right>{itm[4]}<td align=right>{itm[5]}<td>{itm[6]}</tr>"
+                msg_body += "<tr>"+grp1_spacing+ f"<td>{itm[0]}<td>{itm[1]}<td align=right>{round(float(itm[2]), 3) if itm[2].replace('.', '', 1).isdigit() else itm[2]}<td align=right>{('' if 'null' in itm[3] else float(itm[3]) if itm[3].replace('.', '', 1).isdigit() else itm[3])}<td align=right>{itm[4]}<td align=right>{itm[5]}<td>{float(itm[6]):.2f}</tr>"
                 #msg_body += "<tr>"+grp1_spacing+ "<td>{}<td>{}<td align=right>{}<td align=right>{}<td align=right>{}<td align=right>{}<td>{}</tr>".format(itm[0], itm[1],
                 #                                                                             round(float(itm[2]), 3) if itm[2].replace('.', '', 1).isdigit() else itm[2],
                 #                                                                             ('' if 'null' in itm[3] else itm[3]), itm[4], itm[5], itm[6] )
@@ -108,12 +108,67 @@ def generate_message_body_report_grouping(raw_string):
     print(f"FINAL MESSAGE: {msg_body}")
     return(msg_body)
 
-msg_body = generate_message_body_report_grouping(result)
+#msg_body = generate_message_body_report_grouping(result)
 #print(msg_body)
 
+def generate_message_body_report_2groupings(raw_string):
+    rows = [x for x in result.split('^') if x]
+    print(rows)
+    for itm in sorted(rows):
+        print(itm.split('|')[0] + " -> " + str(itm.split('|')[1:]))
+    group1 = {}
+    for itm in sorted(rows):
+        itm_cols = itm.split('|')
+        grp1_itm = itm_cols[0]
+        grp2_itm = itm_cols[1]
+        print(f"* {grp1_itm} -> {grp2_itm}")
+        if grp1_itm in group1:
+            for itm2 in group1[grp1_itm]:
+                print(f"** {group1[grp1_itm]} / {itm2}")
+                itm_index=0
+                if grp2_itm in itm2:
+                    print(f"---> APPEND grp2: {grp2_itm} => {group1}")
+                    group1[grp1_itm][itm_index][grp2_itm].append(itm_cols[2:])
+                else:
+                    print(f"---> NEW grp2: {grp2_itm} => {group1}")
+                    group1[grp1_itm][0] = [{grp2_itm: itm_cols[2:]}]
+                itm_index += 1
+        else:
+            print(f"---> NEW grp1: {grp1_itm} & {grp2_itm} => {group1}")
+            group1[grp1_itm] = [{grp2_itm: itm_cols[2:]}]
+
+        #group1[itm_cols[0]] = group1[itm_cols[0]] + [itm_cols[1:]] if itm_cols[0] in group1 else [itm_cols[1:]]
+        #group1[grp1_itm] = group1.get(grp1_itm, []) + [itm_cols[1:]]
+    print(group1)
+    #print(len(group1))
+    msg_body = f"<br><br><h3>Report: {get_report_year_month()}</h3>"
+    columns = ['TYPE', 'CATEGORY', 'SUB-CATEGORY', 'VAL', 'THRESHOLD', 'MEASURE1', 'MEASURE2', 'MEASURE3']
+    msg_body += "<table border=1 cellspacing=0><tr bgcolor='green'><th width=100>TYPE<th width=150>CATEGORY<th>SUB-CATEGORY<th>VAL<th>THRESHOLD<th>MEASURE1<th>MEASURE2<th>MEASURE3</tr>"
+    if len(group1) > 0:
+        for k,val in group1.items():
+            # print(f'key:{k} -> {len(group1[k])}')
+            grp1_spacing = f"<td valign=top rowspan={len(group1[k])}>{k}"
+            for itm in val:
+                #print(f"->{itm}")
+                msg_body += "<tr>"+grp1_spacing+ f"<td>{itm[0]}<td>{itm[1]}<td align=right>{round(float(itm[2]), 3) if itm[2].replace('.', '', 1).isdigit() else itm[2]}<td align=right>{('' if 'null' in itm[3] else float(itm[3]) if itm[3].replace('.', '', 1).isdigit() else itm[3])}<td align=right>{itm[4]}<td align=right>{itm[5]}<td>{float(itm[6]):.2f}</tr>"
+                #msg_body += "<tr>"+grp1_spacing+ "<td>{}<td>{}<td align=right>{}<td align=right>{}<td align=right>{}<td align=right>{}<td>{}</tr>".format(itm[0], itm[1],
+                #                                                                             round(float(itm[2]), 3) if itm[2].replace('.', '', 1).isdigit() else itm[2],
+                #                                                                             ('' if 'null' in itm[3] else itm[3]), itm[4], itm[5], itm[6] )
+                grp1_spacing = ""
+    else:
+        msg_body += f"<tr><td colspan={len(columns)}>NO RECORDS</td></tr>"
+    msg_body += "</table>"
+    #print(f"FINAL MESSAGE: {msg_body}")
+    return(msg_body)
+
+msg_body = generate_message_body_report_2groupings(result)
+print(msg_body)
+
 #write to HTML file
-#file_path = "/home/km/km/"
+file_path = "/home/km/km/"
 with open("zz_report.html", 'w') as file:
     file.write(msg_body)
+
+
 
 
