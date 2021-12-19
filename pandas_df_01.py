@@ -10,24 +10,25 @@ import numpy as np
 
 
 #Simple List
-list=['aa', 'bb', 'cc']
+list=['aa', 'bb','cc','dd','ee','ff','gg','hh']
 
 #Create DF
 listDF = pd.DataFrame(list)
+listDF = pd.DataFrame(list, columns=['Title'])
 #>>> type(listDF) => <class 'pandas.core.frame.DataFrame'>
 
-#with Column header name
-listDF = pd.DataFrame(list, columns=['Title'])
+#Display/show first or last (default=5) rows
+listDF.head() # or df.head(3)
+listDF.tail() # or df.tail(5)
 
-#using DataFrame class directly
-from pandas import DataFrame
-listDF = DataFrame(list, columns=['Title'])
-#OR using an alias
-#from pandas import DataFrame as df
-#listDF = df(list, columns=['Title'])
+listDF.columns
+listDF.info()
 
-#Display top 5 rows
-listDF.head(5)
+
+#list of rows
+data = [(1,'aa','2020-01-01'), (2,'bb','2021-01-01'), (3,'cc','2021-12-01')]
+dataDF = pd.DataFrame(data, columns=['id','name','login_date'])
+dataDF.head()
 
 numbersDF1 = pd.DataFrame(np.arange(16).reshape(4,4))
 numbersDF1.head()
@@ -38,26 +39,27 @@ dfeven.head()
 
 #From Dictionary object: uses Key for column name
 raw_data = {'first_name': ['Jason', 'Molly', 'Tina', 'Jake', 'Amy'],
-        'last_name': ['Miller', 'Jacobson', ".", 'Milner', 'Cooze'],
-        'age': [42, 52, 36, 24, 73],
-        'preTestScore': [4, 24, 31, ".", "."],
-        'postTestScore': ["25,000", "94,000", 57, 62, 70]}
+            'last_name': ['Miller', 'Jacobson', ".", 'Milner', 'Cooze'],
+            'age': [42, 52, 36, 24, 73],
+            'preTestScore': [4, 24, 31, ".", "."],
+            'postTestScore': ["25,000", "94,000", 57, 62, 70]
+            }
 
-type(raw_data)
-#<class 'dict'>
 df = pd.DataFrame(raw_data)
+#NOTE: all data should be of same length; else we get error:
+#ValueError: All arrays must be of the same length
 
 from pandas import DataFrame
 rndDF = DataFrame({ 'k1': ['X', 'X', 'Y', 'Y', 'Z'],
-    'k2':['alpha','beta','alpha','beta','alpha'],
-    'dataset1':np.random.randint(5, size=5),
-    'dataset2':np.random.randint(5, size=5)})
+                    'k2':['alpha','beta','alpha','beta','alpha'],
+                    'dataset1':np.random.randint(5, size=5),
+                    'dataset2':np.random.randint(5, size=5)})
 
 #----------------------Read from file-------------------------------
 
 #2 ways:
 #****1: using pd
-datadf = pd.read_csv("/home/kiran/km/km_hadoop/data/data_loopback_date.tsv", delimiter='\t', header=0)
+datadf = pd.read_csv("/home/km/km/km_practice/data/data_loopback_date.tsv", delimiter='\t', header=0)
 #Other options while file read
 #header=None #by default first row as header
 #delimiter='|' or '\t' : default delimiter is ','
@@ -75,7 +77,8 @@ datadf.head(5)
 #4    1009  2016-07-23 12:37:11.570      8
 
 #****2: using DataFrame class
-datadf2 = DataFrame.from_csv("/home/kiran/km/km_hadoop/data/data_loopback_date.tsv", sep='\t') #from_csv() is deprecated
+datadf2 = DataFrame.from_csv("/home/km/km/km_practice/data/data_loopback_date.tsv", sep='\t')
+#from_csv() is deprecated
 #Creates dataframe the default index with first column
 datadf2.head(5)
 #                     createDate  grade
@@ -94,33 +97,26 @@ datadf2.reset_index()
 #1345671|Kerry Johnson|123 Mains St.|Bellevue|WA
 #1230504|Liliana Strauss|23000 Indian Rd.|Pasadena|CA
 #
-dfcust = pd.read_csv("/home/kiran/km/km_hadoop/data/data_rtl_customers.csv", delimiter='|' )
+dfcust = pd.read_csv("/home/km/km/km_practice/data/data_rtl_customers.csv", delimiter='|' )
 
 
-#file = r'/home/kiran/km/km_hadoop/data/data_rtl_customers.csv'
+#file = r'/home/km/km/km_practice/data/data_rtl_customers.csv'
 #df = pd.read_csv(file)
 
 #Specify columns
-dfcust = pd.read_csv("/home/kiran/km/km_hadoop/data/data_rtl_customers.csv", delimiter='|', names=['mem_num','name','addr1','city','state'])
+dfcust = pd.read_csv("/home/km/km/km_practice/data/data_rtl_customers.csv", delimiter='|', names=['mem_num','name','addr1','city','state'])
 
 #or specify column after creation
 #df.columns = ['Mem Num','Name','Addr1','City','State']
 dfcust.columns = ['mem_num','name','addr1','city','state']
 
-dfcust.columns
-dfcust.info()
-
-#Get first or last (default=5) rows
-dfcust.head() # or df.head(3)
-dfcust.tail() # or df.tail(5)
-
 
 #Specify index column
-df2 = pd.read_csv("/home/kiran/km/km_hadoop/data/data_2d.csv", names=['c1', 'c2', 'c3'], index_col=['c1','c2'])
+df2 = pd.read_csv("/home/km/km/km_practice/data/data_city_temps", names=['city', 'min_temp', 'max_temp'], index_col=['city'])
 
-#Specify null values
-sentinels = {'Last Name': ['.', 'NA'], 'Pre-Test Score': ['.']}
-df2 = pd.read_csv("/home/kiran/km/km_hadoop/data/data_2d.csv", names=['c1', 'c2', 'c3'], na_values=sentinels)
+#Specify what values are to be considered as null values
+null_handler = {'min_temp': ['.', 'NA','N/A','Not Available']}
+df2 = pd.read_csv("/home/km/km/km_practice/data/data_city_temps", names=['city', 'min_temp', 'max_temp'], na_values=null_handler)
 
 
 #Read a column data
@@ -134,16 +130,16 @@ df2.c1.head(4)
 df2.head(4).c1
 
 #skip bad rows if any
-df3 = pd.read_csv("/home/kiran/km/km_hadoop/data/test_data_2.csv", delimiter=":", warn_bad_lines=False, error_bad_lines=False)
+df3 = pd.read_csv("/home/km/km/km_practice/data/test_data_2.csv", delimiter=":", warn_bad_lines=False, error_bad_lines=False)
 
 
-#Read from cipboard; NEEDS some additional libraries
+#Read from clipboard; NEEDS some additional libraries
 #clipDF = pd.read_clipboard()
 
 
 #Operations:
 #filter by specific data
-WADF = dfcust[ dfcust['state']=='WA' ]
+WADF = dfcust[dfcust['state']=='WA' ]
 WADF = dfcust[(dfcust['state']=='WA') & (dfcust['city']=='Bellevue')]
 
 WADF = dfcust.loc[ dfcust['state']=='WA']
@@ -220,12 +216,9 @@ df2.rename(columns=dict(zip(old_names, new_names)), inplace=True)
 df2 = df2.rename(columns=lambda x: x[1:])
 df2 = df2.rename(columns=lambda x: x.replace('$', ''))
 
-#Save dataframe to csv
-df.to_csv('/home/kiran/km/km_hadoop/data/data_2d_pandas_saved.csv')
-
 print("--------------groupby--------------")
 #groupby() & apply functions
-txnsdf = pd.read_csv("/home/kiran/km/km_hadoop/data/data_rtl_txns.csv")
+txnsdf = pd.read_csv("/home/km/km/km_practice/data/data_rtl_txns.csv")
 #total qty sold by sku (group by sku)
 soldSkuDF = txnsdf.groupby('sku_id')['qty'].sum()
 soldSkuDF = txnsdf.groupby('sku_id').agg({'qty' : ['size','sum', 'min', 'max', 'mean', 'std']})
@@ -243,7 +236,6 @@ soldSkuDF = txnsdf.groupby('sku_id').agg({'qty': 'sum'}).rename(columns={'qty': 
 txnsdf.groupby('sku_id').agg({'qty': sum}).add_prefix('total_')
 
 
-
 strSkuQtyDF = txnsdf.groupby(['store_id', 'sku_id'], as_index=False)['qty'].sum()
 
 
@@ -253,3 +245,10 @@ dfpivot = strSkuQtyDF.pivot('store_id', 'sku_id', 'qty')
 dfpivot.head(5)
 
 #groupby() on sample
+
+
+
+#Save dataframe to csv
+df2.to_csv('/home/km/km/km_practice/data/xx_write_data_2d_pandas_saved.csv', sep="|", index=False, header=True)
+#Append to file: mode='a'
+#enclose text by quote: quoting=1, quotechar='"'
