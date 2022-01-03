@@ -216,6 +216,8 @@ df2.rename(columns=dict(zip(old_names, new_names)), inplace=True)
 df2 = df2.rename(columns=lambda x: x[1:])
 df2 = df2.rename(columns=lambda x: x.replace('$', ''))
 
+
+
 print("--------------groupby--------------")
 #groupby() & apply functions
 txnsdf = pd.read_csv("/home/km/km/km_practice/data/data_rtl_txns.csv")
@@ -250,5 +252,18 @@ dfpivot.head(5)
 
 #Save dataframe to csv
 df2.to_csv('/home/km/km/km_practice/data/xx_write_data_2d_pandas_saved.csv', sep="|", index=False, header=True)
+
+data = [(123, 'jake', '2021-12-01')]
+control_file = pd.DataFrame(data, columns=['id', 'name', 'start_date'])
+control_file.to_csv('control_file1.csv', index=False, header=False)
+
+data = {
+        'id': [123],
+        'name': ['jane'],
+        'start_date': ['2021-01-01']
+    }
+control_file = pd.DataFrame(data)
+control_file.to_csv('control_file2.csv', index=False, header=True)
+
 #Append to file: mode='a'
 #enclose text by quote: quoting=1, quotechar='"'
