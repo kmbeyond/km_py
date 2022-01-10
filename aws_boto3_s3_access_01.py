@@ -12,9 +12,10 @@ conn_s3 = boto3.resource(
 )
 #    region_name='us-east-1',
 
-#buckets list
+print(f"-- all buckets list")
 for bucket in conn_s3.buckets.all():
-    print(bucket.name)
+    print(f"-> {bucket}")
+print(f"-----")
 
 #Download data from a bucket
 bkt_name = 'kiranbkt'
@@ -73,5 +74,5 @@ def download_files(bkt_name, path_local_files, prefix=""):
 print("-- Downloading Files from Bucket:")
 #download_files(bkt_name, path_local_files)
 
-download_files(bkt_name, path_local_files, prefix="Finance")
+#download_files(bkt_name, path_local_files, prefix="Finance")
 
