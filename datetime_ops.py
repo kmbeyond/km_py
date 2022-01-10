@@ -78,6 +78,7 @@ dtUTC.strftime('%Y-%m-%d %H:%M:%S %Z')
 dtUTC.strftime('%Y-%m-%d %H:%M:%S %z')
 #=> 2017-12-20 14:50:37 +0000
 
+#needs installing pytz library (using pip)
 cst = pytz.timezone('US/Central')
 datetime.now(cst).strftime('%Y-%m-%d %H:%M:%S %z')
 #=> 2017-12-20 09:31:56 CST-0600
