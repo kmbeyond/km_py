@@ -1,5 +1,5 @@
 import pandas as pd
-#from pandas import DataFrame, read_csv
+from pandas import read_csv
 import numpy as np
 
 '''
@@ -30,12 +30,14 @@ data = [(1,'aa','2020-01-01'), (2,'bb','2021-01-01'), (3,'cc','2021-12-01')]
 dataDF = pd.DataFrame(data, columns=['id','name','login_date'])
 dataDF.head()
 
-numbersDF1 = pd.DataFrame(np.arange(16).reshape(4,4))
-numbersDF1.head()
 
 #DF from 2D matrix
 dfeven = pd.DataFrame([[1,100],[2,200],[5,500]], columns=['small','big'])
 dfeven.head()
+
+import numpy as np
+numbersDF1 = pd.DataFrame(np.arange(16).reshape(4,4))
+numbersDF1.head()
 
 #From Dictionary object: uses Key for column name
 raw_data = {'first_name': ['Jason', 'Molly', 'Tina', 'Jake', 'Amy'],
@@ -49,11 +51,10 @@ df = pd.DataFrame(raw_data)
 #NOTE: all data should be of same length; else we get error:
 #ValueError: All arrays must be of the same length
 
-from pandas import DataFrame
-rndDF = DataFrame({ 'k1': ['X', 'X', 'Y', 'Y', 'Z'],
-                    'k2':['alpha','beta','alpha','beta','alpha'],
-                    'dataset1':np.random.randint(5, size=5),
-                    'dataset2':np.random.randint(5, size=5)})
+rndDF = pd.DataFrame({ 'k1': ['X', 'X', 'Y', 'Y', 'Z'],
+                    'k2': ['alpha','beta','alpha','beta','alpha'],
+                    'dataset1': np.random.randint(5, size=5),
+                    'dataset2': np.random.randint(5, size=5)})
 
 #----------------------Read from file-------------------------------
 
@@ -77,7 +78,7 @@ datadf.head(5)
 #4    1009  2016-07-23 12:37:11.570      8
 
 #****2: using DataFrame class
-datadf2 = DataFrame.from_csv("/home/km/km/km_practice/data/data_loopback_date.tsv", sep='\t')
+datadf2 = pd.DataFrame.from_csv("/home/km/km/km_practice/data/data_loopback_date.tsv", sep='\t')
 #from_csv() is deprecated
 #Creates dataframe the default index with first column
 datadf2.head(5)
@@ -253,17 +254,6 @@ dfpivot.head(5)
 #Save dataframe to csv
 df2.to_csv('/home/km/km/km_practice/data/xx_write_data_2d_pandas_saved.csv', sep="|", index=False, header=True)
 
-data = [(123, 'jake', '2021-12-01')]
-control_file = pd.DataFrame(data, columns=['id', 'name', 'start_date'])
-control_file.to_csv('control_file1.csv', index=False, header=False)
-
-data = {
-        'id': [123],
-        'name': ['jane'],
-        'start_date': ['2021-01-01']
-    }
-control_file = pd.DataFrame(data)
-control_file.to_csv('control_file2.csv', index=False, header=True)
 
 #Append to file: mode='a'
 #enclose text by quote: quoting=1, quotechar='"'
