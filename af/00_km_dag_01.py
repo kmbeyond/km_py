@@ -37,7 +37,7 @@ with DAG(
 ) as dag:
     bash_task1 = BashOperator(
         task_id='bash_task1',
-        bash_command='echo "Executing..."; echo "Airflow version:"`airflow version`; echo "Python:"`python -V`; echo "python3:"`python3 -V`; exit 0'
+        bash_command='echo "Executing..."; echo "Airflow version:"`airflow version`; echo "Python:"`python -V`; echo "python3:"`python3 -V`; python3 -m pip list; exit 0'
     )
 
     dummy_task1 = DummyOperator(
