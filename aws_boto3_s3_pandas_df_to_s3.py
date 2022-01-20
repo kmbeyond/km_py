@@ -35,6 +35,7 @@ conn_s3.meta.client.upload_file("/tmp/data_file.csv",
                                 f"{file_dir_prefix}/{file_name_in_s3}"
                                 #ExtraArgs={'ServerSideEncryption': 'aws:kms', 'SSEKMSKeyId': kms_key})
                                 )
+#or: conn_s3.Bucket(bucket_name).upload_file("/tmp/data_file.csv", f"{file_dir_prefix}/{file_name_in_s3}")
 
 #option:2: write df directly to s3
 #data_df.to_csv(f"s3://{bucket_name}/{file_dir_prefix}/{file_name_in_s3}", index=False, header=True)
@@ -45,6 +46,3 @@ conn_s3.Object(bucket_name, f"{file_dir_prefix}/{file_name_in_s3}")\
 .put(Body=csv_buffer.getvalue()
          #, ServerSideEncryption='aws:kms', SSEKMSKeyId=kms_key
      )
-
-
-
