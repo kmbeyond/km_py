@@ -140,29 +140,45 @@ def generate_test_data_km2(cust_data, delimiter=","):
         ]) for k, v in cust_data.items()
     ]
 
-def upload_to_s3(bucket_name, prefix, file_name, local_path):
+
+def write_list_to_s3(file_name, data_list, bucket_name, prefix, data_delimiter):
+    file_name = file_name + (".txt" if data_delimiter == "" else ".csv")
+    import pandas as pd
+    data_df = pd.DataFrame(data_list)
+    #data_df.to_csv(file_name, index=False, header=False)
+
+    logging.info(f"Upload to S3: {bucket_name}{prefix}{file_name}")
+    import io, csv
+    csv_buffer = io.StringIO()
+    data_df.to_csv(csv_buffer, index=False, header=False)
     client = boto3.resource('s3')
-    logging.info(f"Uploading file to bucket: {bucket_name}")
-    client.Bucket(bucket_name).upload_file(local_path + file_name, prefix + file_name)
+    client.Object(bucket_name, prefix+file_name).put(Body=csv_buffer.getvalue())
 
 
-def write_list_to_s3(data_class, data_list, bucket_name, prefix, data_delimiter):
+def write_list_to_s3_stage(file_name, data_list, bucket_name, prefix, data_delimiter):
     final_data = "\n".join(data_list)
     # logger.info("\nData generated: \n" + final_data)
     stage_loc = "/tmp/"
-    file_name = f"test_data_{data_class}_" + get_datetime_formatted_string(0) + (".txt" if data_delimiter == "" else ".csv")
+    file_name = file_name + (".txt" if data_delimiter == "" else ".csv")
     local_file_w_path = stage_loc + file_name
     with open(local_file_w_path, 'w') as file:
         file.write(final_data)
 
     logging.info("Upload to S3...")
-    upload_to_s3(bucket_name, prefix, file_name, stage_loc )
+    upload_to_s3(bucket_name, prefix, file_name, stage_loc)
 
     if path.exists(local_file_w_path):
         os.remove(local_file_w_path)
         logging.info("Deleted file: " + local_file_w_path)
     else:
         logging.warning("Local file not found: " + local_file_w_path)
+
+
+def upload_to_s3(bucket_name, prefix, file_name, local_path):
+    client = boto3.resource('s3')
+    logging.info(f"Uploading file to bucket: {bucket_name}")
+    client.Bucket(bucket_name).upload_file(local_path + file_name, prefix + file_name)
+
 
 
 def generate_test_data(task_id, **kwargs):
@@ -182,9 +198,10 @@ def generate_test_data(task_id, **kwargs):
     #for rec in cust_data: logging.info(f"{rec} -> {cust_data[rec]}")
 
     data_class = "test_data"
+    file_name = f"{datetime.now().strftime('%Y%m%d%H%M%S')}_test_data"
     data_list = generate_test_data_km2(cust_data, data_delimiter)
     #for rec in data_list: logging.info(f"{rec}")
-    write_list_to_s3(data_class, data_list, bucket_name, prefix, data_delimiter)
+    write_list_to_s3(file_name, data_list, bucket_name, prefix, data_delimiter)
 
     logging.info("Complete")
 
