@@ -15,13 +15,20 @@ logger = logging.getLogger(__name__)
 
 to_email_address = "km@gmail.com"
 
-def dag_success_notification(**kwargs):
+def dag_success_notification(context, **kwargs):
     logger.info("DAG Success")
+    print_context(context)
 
 
-def dag_failure_notification(**kwargs):
+def dag_failure_notification(context, **kwargs):
     logger.info("DAG Failed")
     logger.error("DAG Failed")
+    print_context(context)
+
+
+def print_context(context):
+    for k,v in context.items():
+        logging.info(f"{k} -> {v}")
 
 
 def send_af_email(to_email_address):
