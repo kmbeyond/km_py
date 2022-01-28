@@ -55,13 +55,21 @@ def send_ses_email(to_email_address, ses_source_email, **kwargs):
         logger.info('Email sent! Message ID:')
         #print(response['MessageId'])
 
-def dag_success_notification(**kwargs):
+
+def dag_success_notification(context, **kwargs):
     logger.info("DAG Success")
+    print_context(context)
 
 
-def dag_failure_notification(**kwargs):
+def dag_failure_notification(context, **kwargs):
     logger.info("DAG Failed")
     logger.error("DAG Failed")
+    print_context(context)
+
+
+def print_context(context):
+    for k,v in context.items():
+        logging.info(f"{k} -> {v}")
 
 
 default_args = {
