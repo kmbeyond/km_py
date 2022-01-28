@@ -14,11 +14,11 @@ logger = logging.getLogger(__name__)
 to_email_address = "km@gmail.com"
 config_yaml_file = "config.yaml"
 
-def dag_success_notification(**kwargs):
+def dag_success_notification(context, **kwargs):
     logger.info("DAG Success")
 
 
-def dag_failure_notification(**kwargs):
+def dag_failure_notification(context, **kwargs):
     logger.info("DAG Failed")
     logger.error("DAG Failed")
 
@@ -46,8 +46,16 @@ def my_args(*args, **kwargs):
     print(Fore.RED + "My Args are {}".format(args))
     print("My Kwargs are {}".format(kwargs))
 
+def py_af_logging():
+    from copy import deepcopy
+    from airflow.config_templates.airflow_local_settings import DEFAULT_LOGGING_CONFIG
+
+    LOGGING_CONFIG = deepcopy(DEFAULT_LOGGING_CONFIG)
+    for k,v in LOGGING_CONFIG:
+        logging.info(f"{k} -> {v}")
 
 def py_exception_notify_4(to_email_address, *args, **kwargs):
+    py_af_logging()
     divide_by_zero = 0
     try:
         result = 100/divide_by_zero
