@@ -51,7 +51,7 @@ def py_af_logging():
     from airflow.config_templates.airflow_local_settings import DEFAULT_LOGGING_CONFIG
 
     LOGGING_CONFIG = deepcopy(DEFAULT_LOGGING_CONFIG)
-    for k,v in LOGGING_CONFIG:
+    for k,v in LOGGING_CONFIG.items():
         logging.info(f"{k} -> {v}")
 
 def py_exception_notify_4(to_email_address, *args, **kwargs):
