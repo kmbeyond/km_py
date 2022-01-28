@@ -53,7 +53,7 @@ def my_args(*args, **kwargs):
     print(Fore.RED + "My Args are {}".format(args))
     print("My Kwargs are {}".format(kwargs))
 
-def py_af_logging():
+def py_af_print_log_config():
     from copy import deepcopy
     from airflow.config_templates.airflow_local_settings import DEFAULT_LOGGING_CONFIG
 
@@ -62,7 +62,7 @@ def py_af_logging():
         logging.info(f"{k} -> {v}")
 
 def py_exception_notify_4(to_email_address, *args, **kwargs):
-    py_af_logging()
+    py_af_print_log_config()
     divide_by_zero = 0
     try:
         result = 100/divide_by_zero
