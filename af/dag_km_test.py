@@ -16,11 +16,18 @@ config_yaml_file = "config.yaml"
 
 def dag_success_notification(context, **kwargs):
     logger.info("DAG Success")
+    print_context(context)
 
 
 def dag_failure_notification(context, **kwargs):
     logger.info("DAG Failed")
     logger.error("DAG Failed")
+    print_context(context)
+
+
+def print_context(context):
+    for k,v in context.items():
+        logging.info(f"{k} -> {v}")
 
 
 def execute_metrics_report(config_yaml_file, to_email_address, **kwargs):
