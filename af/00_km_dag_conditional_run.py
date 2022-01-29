@@ -9,6 +9,9 @@ args = {
     'owner': 'airflow',
 }
 
+def decide_next_step():
+    return "task_zero" if random.randint(0,1)==0 else "task_one"
+
 with DAG(
     dag_id='00_km_dag_conditional_run',
     default_args=args,
@@ -22,7 +25,8 @@ with DAG(
 
  is_zero_or_one = BranchPythonOperator(
    task_id="is_zero_or_one",
-   python_callable=lambda: "task_zero" if random.randint(0,1)==0 else "task_one"
+   #python_callable=lambda: "task_zero" if random.randint(0,1)==0 else "task_one"
+   python_callable=decide_next_step
  )
  task_one = DummyOperator(
    task_id='task_one'
