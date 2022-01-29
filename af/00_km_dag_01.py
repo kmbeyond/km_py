@@ -1,22 +1,33 @@
 from datetime import timedelta
-
 from airflow import DAG
 from airflow.operators.bash import BashOperator
 from airflow.operators.dummy import DummyOperator
 from airflow.operators.python import PythonOperator, PythonVirtualenvOperator
 from airflow.utils.dates import days_ago
+import logging
 
+# logging setup
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 def km_function(**kwargs):
     print(f"Py function: km_function")
 
 
-def dag_failure_notification(**kwargs):
-    print("DAG Failed")
+def dag_success_notification(context, **kwargs):
+    logger.info("DAG Success")
+    print_context(context)
 
 
-def dag_success_notification(**kwargs):
-    print("DAG Success")
+def dag_failure_notification(context, **kwargs):
+    logger.info("DAG Failed")
+    logger.error("DAG Failed")
+    print_context(context)
+
+
+def print_context(context):
+    for k,v in context.items():
+        logging.info(f"{k} -> {v}")
 
 
 args = {

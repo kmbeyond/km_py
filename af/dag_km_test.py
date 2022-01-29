@@ -71,7 +71,8 @@ def py_exception_notify_4(to_email_address, *args, **kwargs):
     except Exception as err:
         logging.info(f"Exception during division: {err}")
         if kwargs['task_instance'].try_number == 4:
-            #email
+            logging.info(f"Email to {to_email_address}")
+
         raise Exception("Exception during division")
 
 
