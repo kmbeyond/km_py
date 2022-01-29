@@ -2,7 +2,7 @@ from datetime import datetime, timedelta
 import logging, airflow, yaml
 from airflow import DAG
 from airflow.operators.python_operator import PythonOperator
-from airflow.contrib.hooks.snowflake_hook import SnowflakeHook
+#from airflow.contrib.hooks.snowflake_hook import SnowflakeHook
 from airflow.operators.bash_operator import BashOperator
 from airflow.operators.dummy_operator import DummyOperator
 from colorama import Fore
@@ -35,17 +35,18 @@ def execute_metrics_report(config_yaml_file, to_email_address, **kwargs):
     #DAG config
     #config = yaml.load(open(config_yaml_file, 'r'), Loader=yaml.SafeLoader)
     #aws_account = config['aws_account']
-
+    #snowflake_conn_id = config['snowflake_conn_id']
+    snowflake_conn_id = "snowflake_conn_id_dev"
     # snowflake connection
-    snowflake_hook = SnowflakeHook(snowflake_conn_id="snowflake_conn_id_dev", autocommit=False)
-    cs = snowflake_hook.get_cursor()
-    #snowflake_hook_autocommit = SnowflakeHook(snowflake_conn_id=config['snowflake_conn_id'])
+    #snowflake_hook = SnowflakeHook(snowflake_conn_id=snowflake_conn_id, autocommit=False)
+    #cs = snowflake_hook.get_cursor()
+    #snowflake_hook_autocommit = SnowflakeHook(snowflake_conn_id=snowflake_conn_id)
     #cs_autocommit = snowflake_hook_autocommit.get_cursor()
     logging.info("Calling: METRICS_REPORT_MONTHLY()")
-    cs.execute(f"CALL METRICS_REPORT_MONTHLY('ppa')")
-    result = str(cs.fetchall()[0][0])
+    #cs.execute(f"CALL METRICS_REPORT_MONTHLY('ppa')")
+    #result = str(cs.fetchall()[0][0])
     #result = str(snowflake_hook.get_first(f"CALL METRICS_REPORT_MONTHLY('ppa')"))
-    logger.info(f"Result: {result}")
+    #logger.info(f"Result: {result}")
 
 
 
