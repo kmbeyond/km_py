@@ -87,7 +87,7 @@ default_args = {
 #    'start_date': datetime.datetime(2021, 09, 01) #airflow.utils.dates.days_ago(2),
 
 
-with DAG('dag_km_test', default_args=default_args, schedule_interval=None, catchup=False, dagrun_timeout=timedelta(minutes=90)) as dag:
+with DAG('dag_km_test', default_args=default_args, tags=['km'], schedule_interval=None, catchup=False, dagrun_timeout=timedelta(minutes=90)) as dag:
 
     dummy_task = DummyOperator(task_id='dummy_task')
 
