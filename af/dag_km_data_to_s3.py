@@ -18,9 +18,9 @@ stage_loc = "/tmp/"
 file_prefix = f"km_{datetime.now().strftime('%Y-%m-%d')}/"
 file_name = f"test_{date_for_file_name}.csv"
 
-aws_account = "079158889262"
-snowflake_conn_id = "snowflake_pci-dev_ppa"
-bucket_name = "km-test-bucket-ppa"
+aws_account = "123"
+snowflake_conn_id = "sf"
+bucket_name = "km-bkt"
 region_name = "us-east-1"
 # snowflake connection
 sf_hook = SnowflakeHook(snowflake_conn_id=snowflake_conn_id, autocommit=False)
