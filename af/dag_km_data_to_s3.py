@@ -116,14 +116,11 @@ def write_file_to_s3(bucket_name, prefix="km/", stage_loc="/tmp/", file_name=fil
 
 def send_sns(aws_account, region_name, topic_name, subject, message):
     topic_arn = 'arn:aws:sns:' + region_name + ':' + aws_account + ':' + topic_name
-    config = {
-        "sns_arn": topic_arn
-    }
     sns = boto3.resource('sns',
-                         endpoint_url='https://sns.' + region_name + '.amazonaws.com',
+                         endpoint_url=f"https://sns.{region_name}.amazonaws.com",
                          region_name=region_name,
                          )
-    topic = sns.Topic(config['sns_arn'])
+    topic = sns.Topic(topic_arn)
     # publish to SNS
     response = topic.publish(
         Subject=subject,
