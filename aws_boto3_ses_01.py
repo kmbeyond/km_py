@@ -6,9 +6,6 @@ import logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-#km1
-access_key = ''
-secret_key = ''
 
 def km_send_email(to_email, subject, body):
     try:
@@ -19,8 +16,8 @@ def km_send_email(to_email, subject, body):
             }
         )
         ses_client = boto3.client("ses", region_name="us-east-2",
-                                  aws_access_key_id=access_key,
-                                  aws_secret_access_key=secret_key,
+                                  #aws_access_key_id=access_key,
+                                  #aws_secret_access_key=secret_key,
                                   config=config_ses)
         # endpoint_url="email-smtp.us-east-1.amazonaws.com",
         print("verified addresses:" + str(ses_client.list_verified_email_addresses()))
@@ -46,11 +43,11 @@ def km_send_email(to_email, subject, body):
         for k, v in response.items():
             print(k, '->', v)
         print("SES Success")
-    except:
-        print("Failed to send using SES")
+    except Exception as err:
+        print(f"Failed to send using SES: {err}")
     else:
-        print('Email sent! Message ID:')
-        print('MessageId='+response['MessageId'])
+        print(f"Email sent! MessageId={response['MessageId']}")
+
 
 def main():
     to_email=['kmbeyond@gmail.com']

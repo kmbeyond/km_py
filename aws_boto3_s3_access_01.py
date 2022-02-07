@@ -1,14 +1,10 @@
 import boto3
 import os
 
-#km
-access_key = ''
-secret_key = ''
-
 conn_s3 = boto3.resource(
-    service_name='s3',
-    aws_access_key_id=access_key,
-    aws_secret_access_key=secret_key
+    service_name='s3'
+    #,aws_access_key_id=access_key,
+    #aws_secret_access_key=secret_key
 )
 #    region_name='us-east-1',
 
