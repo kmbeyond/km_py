@@ -26,11 +26,18 @@ def send_sns_message(account_num, region_name, topic_name, subject, message):
     )
     topic = sns.Topic(config['sns_arn'])
     # publish to SNS
+    #response = topic.publish(
+    #    Subject=subject,
+    #    Message=json.dumps({'default': message}),
+    #    MessageStructure='json'
+    #)
     response = topic.publish(
         Subject=subject,
-        Message=json.dumps({'default': message}),
-        MessageStructure='json'
+        Message=message
     )
+    ## using client (low level) & direct SMS
+    #sns_client = boto3.client('sns')
+    #sns_client.publish("+1234567890", "testing simple text")
 
 
 def main():
