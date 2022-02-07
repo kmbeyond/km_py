@@ -37,7 +37,7 @@ def send_sns_message(account_num, region_name, topic_name, subject, message):
     )
     ## using client (low level) & direct SMS
     #sns_client = boto3.client('sns')
-    #sns_client.publish("+1234567890", "testing simple text")
+    #sns_client.publish(PhoneNumber="+1234567890", Message="testing simple text")
 
 
 def main():
