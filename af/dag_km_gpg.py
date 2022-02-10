@@ -5,6 +5,7 @@ from airflow.operators.python_operator import PythonOperator
 
 # logging setup
 logging.basicConfig(level=logging.ERROR)
+logging.getLogger('gnupg').setLevel(logging.WARN)
 logger = logging.getLogger(__name__)
 
 to_email_address = "km@km.com"
