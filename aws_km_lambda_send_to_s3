@@ -1,0 +1,57 @@
+'''
+#pre steps
+km_lambda_send_to_s3
+ -(default)Execution Role added
+ -Attach "km-policy-access-to-s3" policy to Execution Role
+
+Policy "km-policy-access-to-s3":
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "AccessToS3",
+            "Effect": "Allow",
+            "Action": "s3:*",
+            "Resource": [
+                "arn:aws:s3:::km-test-bucket",
+                "arn:aws:s3:::km-test-bucket/*"
+            ]
+        }
+    ]
+}
+
+Event=
+{
+  "bucket_name": "km-test-bucket-ppa",
+  "file_dir_prefix": "km_lambda"
+}
+
+'''
+
+
+import json, boto3,os
+
+def lambda_handler(event, context):
+    print(f"Event: {event}")
+    print(f"context: {context}")
+    bucket_name = event.get('bucket_name')
+    file_dir_prefix = event.get('file_dir_prefix')
+    from datetime import datetime, timedelta
+    date_for_file_name = datetime.now().strftime('%Y_%m_%d_%H_%M')
+    file_name = f"test_{date_for_file_name}.csv"
+    print(f"Create file: s3://{bucket_name}/{file_dir_prefix}/{file_name}")
+    
+    local_path = "/tmp/" + file_name
+    s3_path = "output/" + file_name
+    os.system(f'echo "a,b,c" > {local_path}')
+    s3 = boto3.resource("s3")
+    s3.meta.client.upload_file(local_path, bucket_name, f"{file_dir_prefix}/{file_name}")
+
+    print(f" -> Saved file")
+    
+    return {
+        'statusCode': 200,
+        'body': json.dumps(f'Data sent to {bucket_name}')
+    }
+
+
