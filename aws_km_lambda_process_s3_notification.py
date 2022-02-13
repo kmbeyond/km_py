@@ -41,7 +41,7 @@ def lambda_handler(event, context):
     contents_binary = data['Body'].read()
     contents_text = contents_binary.decode('utf-8')
     print(f"File contents: {contents_text}")
-    for line in contents_text.split('\\n'):
+    for line in contents_text.split('\n'):
         print(f"-> {line}")
         #process each line
 
