@@ -47,7 +47,7 @@ with DAG('dag_km_dependency_02_seq_02', default_args=default_args, tags=['km'], 
     downstream_task = ExternalTaskSensor(
         task_id="downstream_task",
         external_dag_id='dag_km_dependency_02_seq_01',
-        external_task_id='notify_downstream_task',
+        external_task_id='py_start_task',
         allowed_states=['success'],
         failed_states=['failed', 'skipped']
     )
