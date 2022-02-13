@@ -23,7 +23,7 @@ Policy "km-policy-access-to-s3":
 Event=
 {
   "bucket_name": "km-test-bucket-ppa",
-  "file_dir_prefix": "km_lambda"
+  "file_dir_prefix": "km_ingestion"
 }
 
 '''
