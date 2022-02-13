@@ -1,3 +1,28 @@
+'''
+#pre steps
+
+Bucket:
+File: km_data/data_year_max_temp.csv
+city,year,quality,max,min
+Chicago,2020,9999,90,-20
+Chicago,2019,5,85,-40
+Chicago,2018,4,84,-32
+Chicago,2017,9999,82,-30
+
+Event=
+{
+  "bucket_name": "km-bkt",
+  "key2": "value2"
+}
+
+'''
+
+#resource = boto3.resource('s3')
+#my_bucket = resource.Bucket('km-bkt')
+#my_bucket.upload_file('/tmp/data_year_max_temp_result.csv', Key='km_data/data_year_max_temp_result.csv')
+
+
+
 import boto3
 import pandas as pd
 import io
@@ -9,15 +34,17 @@ def lambda_handler(event, context):
     logger = logging.getLogger()
     logger.setLevel(logging.INFO)
     try:
-
+        bucket_name = "km-bkt"
+        bucket_name = event.get('bucket_name')
+        file_w_prefix = "km_data/data_year_max_temp.csv"
         client = boto3.client('s3')  # low-level functional API
-
         # resource = boto3.resource('s3') #high-level object-oriented API
-        # my_bucket = resource.Bucket('kmbkt') #subsitute this for your s3 bucket name.
+        # my_bucket = resource.Bucket(bucket_name) #subsitute this for your s3 bucket name.
 
-        obj = client.get_object(Bucket='kiranbkt', Key='data_year_max_temp.csv')
-        file = obj["Body"].read()
-        df_yr_temp = pd.read_csv(io.BytesIO(file), delimiter=",", low_memory=False)
+        obj = client.get_object(Bucket=bucket_name, Key=file_w_prefix)
+        file_contents = obj["Body"].read()
+        print(f"File contents: {file_contents}")
+        df_yr_temp = pd.read_csv(io.BytesIO(file_contents), delimiter=",", low_memory=False)
 
         #print("Top 10 records: \n{}".format(df_yr_temp.head(10)) )
         #print("Keys: \n{}".format(df_yr_temp.keys()) )
@@ -60,12 +87,6 @@ def lambda_handler(event, context):
 
     return response
 
-
-
-
-#resource = boto3.resource('s3') #high-level object-oriented API
-#my_bucket = resource.Bucket('my-bucket') #subsitute this for your s3 bucket name.
-#my_bucket.upload_file('file',Key='data_year_max_temp_result.csv')
 
 
 
