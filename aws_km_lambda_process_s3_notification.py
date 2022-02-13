@@ -38,8 +38,12 @@ def lambda_handler(event, context):
     
     s3 = boto3.client('s3')
     data = s3.get_object(Bucket=bucket_name, Key=file_name_w_prefix)
-    contents = data['Body'].read()
-    print(f"File contents: {contents}")
+    contents_binary = data['Body'].read()
+    contents_text = contents_binary.decode('utf-8')
+    print(f"File contents: {contents_text}")
+    for line in contents_text.split('\\n'):
+        print(f"-> {line}")
+        #process each line
 
     processed_file_dir_prefix="km_lambda_processed/"
     print(f"File copy to: s3://{bucket_name}/{processed_file_dir_prefix}{file_name_w_prefix}")
