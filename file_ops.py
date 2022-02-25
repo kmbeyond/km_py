@@ -1,6 +1,18 @@
 #Read file
 
-#read file, split & load into list
+#read file directly into a string
+file = open('deploy_plan.csv')
+contents = file.read()
+file.close()
+
+print(f"File data: {contents}")
+
+#print each line (split by new line)
+for line in contents.split('\n'):
+    print(f"-> {line}")
+
+    
+#read file, split by space & load into list
 AllWords = []
 for line in open("/home/kiran/km/km_big_data/data/data_wordcount.txt"):
 #for line in open("C:\km\hadoop\data\data_wordcount.txt"):
