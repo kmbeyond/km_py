@@ -53,11 +53,15 @@ print("String to Date obj: {}".format( dt1) )
 
 #time in milliseconds
 import time
-print("time in milliseconds=", int(round(time.time() * 1000)) )
+time_current = time.time()
 
-time = time.time()
-print(f"current time: {time}")
-ms_current = round(time * 1000)
+print(f"current time: {time_current}")
+
+ms_current = round(time_current * 1000)
+print("time in milliseconds=", int(ms_current) )
+print("time in Timestamp=", datetime.fromtimestamp(time_current).strftime('%Y-%m-%d %H:%M:%S') )
+
+
 past_hours=1
 ms_back = round( (time-(60 * 60 * past_hours)) * 1000 )
 print(f"ms in last {past_hours} hour(s): {ms_back} -> {ms_current}")
