@@ -43,17 +43,18 @@ def strip_values(row):
 
 
 def km_query_tbl2():
-    table_name = "cdppciprod-ethos-tracking"
+    table_name = "km-dynamodb-tbl"
     print(f"Connecting to table: {table_name}")
     table = dynamodb.Table(table_name)
 
-    job_id = '4_PPAStageOneUpload'
+    job_id = 'km-job'
     import time
-    time = time.time()
-    d_now = str(round(time * 1000))
-    #d_now="1641985460162"
-    d_past = str(round((time - (60 * 180)) * 1000))
-    #d_past="1641985222111"
+    time_current = time.time()
+    d_now = round(time_current * 1000)
+    #d_now="1649352312890"  --> 2022-04-07 13:25:12
+    num_of_hours = 2
+    d_past = str(round((time_current - (60*60*num_of_hours)) * 1000))
+    #d_past="1649345112890"  --> 2022-04-07 11:25:12
 
     from boto3.dynamodb.conditions import Key
     response = table.query(
