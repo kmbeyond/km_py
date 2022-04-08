@@ -20,12 +20,11 @@ for line in open("/home/kiran/km/km_big_data/data/data_wordcount.txt"):
     AllWords+=list(row)
 
 
-print("------- words put into list ---------")
-for word in AllWords:
-    print(word)
-print("------- words put into list Complete---------")
-#for i in range(len(AllWords)):
-#    print("{} = {}".format(i, AllWords[i]))
+#Write a string to file
+str_data="line1\nline2\nline3"
+with open("zz_test.txt", 'w') as file:
+    file.write(f"{str_data}")
+
 
 
 #insert every n words or period in a row & write into a file
