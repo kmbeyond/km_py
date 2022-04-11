@@ -4,6 +4,9 @@ import os
 #os Functions
 #https://docs.python.org/2/library/os.html
 
+#list of files in current dir
+#from os import listdir
+print(f"Listdir: {os.listdir(os.getcwd())}")
 
 
 #Print directories, subdirectories & files
