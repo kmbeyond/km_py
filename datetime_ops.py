@@ -51,10 +51,28 @@ print("String to Date obj: {}".format( dt1) )
 
 
 
-#time in milliseconds
+#------timestamp (time in milliseconds)
+from datetime import datetime
+ts = datetime.now().timestamp()
+print(f"current timestamp: {ts}")
+=>current timestamp: 1663859078.253567
+
 import time
 time_current = time.time()
 print(f"current time: {time_current}")
+=>current time: 1663858767.2510579
+
+#to rounded milliseconds (10 digits)
+ms_current = round(time_current)
+print("time in milliseconds=", ms_current )
+=> time in milliseconds= 1663856362
+
+time_in_ms = 1646380381322
+#NOTE: if timestamp more than 10 digits, divide by appropriate 10s
+dt = datetime.fromtimestamp(time_in_ms/1000)
+
+
+#timestamp/ms into time
 print(datetime.fromtimestamp(time_current))
 => 2022-09-22 10:08:09.391967
 
@@ -62,23 +80,22 @@ print(datetime.fromtimestamp(time_current))
 print(datetime.fromtimestamp(time_current).strftime('%Y-%m-%d %H:%M:%S') )
 => 2022-09-22 10:13:29
 
-#to convert to milliseconds
-ms_current = round(time_current)
-print("time in milliseconds=", ms_current )
-=> time in milliseconds= 1663856362
 
+#---get past/futue timestamp
 past_hours=1
-ms_back = round( (time-(60 * 60 * past_hours)) * 1000 )
-print(f"ms in last {past_hours} hour(s): {ms_back} -> {ms_current}")
+ms_back = round( (time.time()-(60 * 60 * past_hours)) )
+print(datetime.fromtimestamp(ms_back))
+print(f"Time in last {past_hours} hour(s): {ms_back} -> {ms_current}")
+=> Time in last 1 hour(s): 1663856013 -> 1663859613
 
-#Time in milliseconds to datetime
-from datetime import datetime, timedelta
-time_in_ms = 1646380381322
-dt = datetime.fromtimestamp(time_in_ms/1000)
-print(dt)
-print(dt.strftime('%Y-%m-%d %H:%M:%S'))
-dt_utc = dt + timedelta(hours=5)
-print(dt_utc.strftime('%Y-%m-%d %H:%M:%S'))
+print(f"Time in last {past_hours} hour(s): {datetime.fromtimestamp(ms_back)} -> {datetime.fromtimestamp(ts)}")
+=> Time in last 1 hour(s): 2022-09-22 10:13:33 -> 2022-09-22 11:13:32.858255
+
+#using timedelta
+print(datetime.now())
+=>2022-09-22 11:20:51.181308
+print(datetime.now() + timedelta(hours=5))
+=>2022-09-22 16:20:51.181308
 
 
 #-------------Timezones & UTC/GMT-----
