@@ -1,6 +1,6 @@
 #arguments
-#Execution: python py_args.py 1 2
-# Wrong inputs: python py_args.py 1 2
+#Execution: python args_test.py 1 2
+# Wrong inputs: python args_test.py 1 2
 # echo $? => 5
 
 import sys
