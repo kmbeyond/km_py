@@ -1,6 +1,8 @@
 
 mynum=427
 mylist = list(str(mynum))
+#2 digit combinations: 27, 42, 42
+#3 digit combinations: 247, 274, 427, 472, 724, 742
 
 print(f"input: {mylist}")
 
@@ -10,15 +12,13 @@ import itertools
 print("itertools.combinations()")
 print("-- 2 digits")
 comb_list = list(itertools.combinations(mylist, 2))
-comb_list2 = [i for i in comb_list if i[0]!=i[1]]
-print(comb_list2)
-print(sorted([int(''.join([str(i) for i in list(i)])) for i in comb_list2]))
+print(comb_list)
+print(sorted([int(''.join([str(i) for i in list(i)])) for i in comb_list]))
 
 print("-- 3 digits")
 comb_list = list(itertools.combinations(mylist, 3))
-comb_list3 = [i for i in comb_list if i[0]!=i[1] and i[2]!=i[1] and i[2]!=i[0]]
-print(comb_list3)
-print(sorted([int(''.join([str(i) for i in list(i)])) for i in comb_list3]))
+print(comb_list)
+print(sorted([int(''.join([str(i) for i in list(i)])) for i in comb_list]))
 
 
 print("itertools.product()")
