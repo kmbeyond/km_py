@@ -1,7 +1,7 @@
 
 mynum=427
 mylist = list(str(mynum))
-#2 digit combinations: 27, 42, 42
+#2 digit combinations: 24, 27, 42, 47, 72, 74
 #3 digit combinations: 247, 274, 427, 472, 724, 742
 
 print(f"input: {mylist}")
@@ -14,12 +14,13 @@ print("-- 2 digits")
 comb_list = list(itertools.combinations(mylist, 2))
 print(comb_list)
 print(sorted([int(''.join([str(i) for i in list(i)])) for i in comb_list]))
+#=>Gives only 3 combinations
 
 print("-- 3 digits")
 comb_list = list(itertools.combinations(mylist, 3))
 print(comb_list)
 print(sorted([int(''.join([str(i) for i in list(i)])) for i in comb_list]))
-
+#=>Gives only 1 combination(s)
 
 print("itertools.product()")
 print("-- 2 digits")
