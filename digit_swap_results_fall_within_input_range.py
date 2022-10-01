@@ -9,29 +9,7 @@ mynum=427
 
 #mystr=str(mynum)
 
-#swap using list
-def swap_digits(mynum):
-    mylist = list(str(mynum))
-    for i in range(len(mylist)):
-        for j in range(i+1,len(mylist)):
-            #yield (i,j)
-            mylist_temp=mylist.copy()  #mylist_temp=mylist[:]
-            #swap elements
-            mylist_temp[i],mylist_temp[j] = mylist_temp[j], mylist_temp[i]
-            #temp=mylist_temp[i]
-            #mylist_temp[i]=mylist_temp[j]
-            #mylist_temp[j]=temp
-            print(f"{mylist}: {i}-{j} => {mylist_temp}")
-            yield int("".join(mylist_temp))
-
-print(list(swap_digits(mynum)))
-#=> 
-#['4', '2', '7']: 0-1 => ['2', '4', '7']
-#['4', '2', '7']: 0-2 => ['7', '2', '4']
-#['4', '2', '7']: 1-2 => ['4', '7', '2']
-#[247, 724, 472]
-
-#OR swap using bytearray
+#swap using bytearray
 def swap_digits_using_bytes(mynum):
     myba = bytearray(str(mynum).encode())
     for i in range(len(myba)-1):
@@ -53,6 +31,30 @@ print(list(swap_digits_using_bytes(mynum)))
 #[247, 724, 472]
 
 
+#swap using list
+def swap_digits_using_list(mynum):
+    mylist = list(str(mynum))
+    for i in range(len(mylist)):
+        for j in range(i+1,len(mylist)):
+            #yield (i,j)
+            #swap in copy onlly, not to update original list
+            mylist_temp=mylist.copy()  #mylist_temp=mylist[:]
+            #swap elements
+            mylist_temp[i],mylist_temp[j] = mylist_temp[j], mylist_temp[i]
+            #temp=mylist_temp[i]
+            #mylist_temp[i]=mylist_temp[j]
+            #mylist_temp[j]=temp
+            print(f"{mylist}: {i}-{j} => {mylist_temp}")
+            yield int("".join(mylist_temp))
+
+print(list(swap_digits(mynum)))
+#=> 
+#['4', '2', '7']: 0-1 => ['2', '4', '7']
+#['4', '2', '7']: 0-2 => ['7', '2', '4']
+#['4', '2', '7']: 1-2 => ['4', '7', '2']
+#[247, 724, 472]
+
+
 def check_in_limits_after_swap(num_to_check, min1, max1):
     all_matches = list(swap_digits_using_bytes(num_to_check))
     for i in all_matches:
@@ -68,16 +70,16 @@ print ( check_in_limits_after_swap(427, 900,1000) )
 
 #-----Solution with minimal code
 
-#return copy of swapped list (DONT SWAP IN ORIGINAL LIST)
-def my_swap(mylist, i ,j):
- mylist_temp=mylist.copy()
- mylist_temp[i],mylist_temp[j] = mylist_temp[j], mylist_temp[i]
- return mylist_temp
+#return copy of swapped number
+def get_num_after_swap(mynum, i ,j):
+ myba = bytearray(str(mynum).encode())
+ myba[i],myba[j] = myba[j], myba[i]
+ return int(myba.decode())
 
 #get swapped numbers list
 def get_swapped_nums_list(mynum):
     mylist = list(str(mynum))
-    return [int("".join(my_swap(mylist,i,j))) for i in range(len(mylist)-1) for j in range(i+1,len(mylist)) ]
+    return [get_num_after_swap(mynum,i,j) for i in range(len(mylist)-1) for j in range(i+1,len(mylist)) ]
 
 def check_in_limits_after_swap(num_to_check, min1, max1):
     all_matches = list(get_swapped_nums_list(num_to_check))
