@@ -1,43 +1,54 @@
 
 
 #------swap any 2 digits in a number & check if any number falls between a limit
-# check_in_limits_after_swap(427, 700,800)   => True because swap can give 724,742 that falls within 700 & 800
-# check_in_limits_after_swap(427, 900,1000)  => none of numbers after swapping can fall within 700 & 800
-
 
 mynum=427
+
+#all swap combinations: [247, 742, 724]
+# check_in_limits_after_swap(427, 700,800)   => True because swap can give 724,742 that falls within 700 & 800
+# check_in_limits_after_swap(427, 900,1000)  => False because none of numbers after swapping can fall within 700 & 800
+
 #mystr=str(mynum)
 
 #swap using list
 def swap_digits(mynum):
     mylist = list(str(mynum))
     for i in range(len(mylist)):
-        for j in range(len(mylist)):
-            if i!=j:
-                #yield (i,j)
-                temp=mylist[i]
-                mylist[i]=mylist[j]
-                mylist[j]=temp
-                yield int("".join(mylist))
-
+        for j in range(i+1,len(mylist)):
+            #if i!=j:
+            #yield (i,j)
+            mylist_temp=mylist.copy()
+            temp=mylist_temp[i]
+            mylist_temp[i]=mylist_temp[j]
+            mylist_temp[j]=temp
+            print(f"{mylist}: {i}-{j} => {mylist_temp}")
+            yield int("".join(mylist_temp))
 
 print(list(swap_digits(mynum)))
-#=> ['247', '742', '472', '427', '724', '742']
+#=> 
+#['4', '2', '7']: 0-1 => ['2', '4', '7']
+#['4', '2', '7']: 0-2 => ['7', '2', '4']
+#['4', '2', '7']: 1-2 => ['4', '7', '2']
+#[247, 724, 472]
 
 #OR swap using bytearray
 def swap_digits_using_bytes(mynum):
-    mybc = bytearray(str(mynum).encode())
-    for i in range(len(mybc)):
-        for j in range(len(mybc)):
-            if i!=j:
-                temp=mybc[i]
-                mybc[i]=mybc[j]
-                mybc[j]=temp
-                yield int(mybc.decode())
-
+    myba = bytearray(str(mynum).encode())
+    for i in range(len(myba)-1):
+        for j in range(i+1,len(myba)):
+            myba_temp=myba.copy()
+            temp=myba_temp[i]
+            myba_temp[i]=myba_temp[j]
+            myba_temp[j]=temp
+            print(f"{myba.decode()}: {i}-{j} => {myba_temp.decode()}")
+            yield int(myba_temp.decode())
 
 print(list(swap_digits_using_bytes(mynum)))
-#=> ['247', '742', '472', '427', '724', '742']
+#=>
+#427: 0-1 => 247
+#427: 0-2 => 724
+#427: 1-2 => 472
+#[247, 724, 472]
 
 
 
