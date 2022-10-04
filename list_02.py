@@ -34,6 +34,31 @@ print(my_list)
 my_list.extend([112])
 print(my_list)
 
+#-------------------------2Dimensional lists (List of Lists)
+array_2d = [
+    [1,0,1],
+    [1,1,1],
+    [0,0,1]
+]
+
+def print_2darray(array_2d):
+    for i in range(len(array_2d)):
+        for j in range(len(array_2d[i])):
+            print(f"({i},{j}) = {array_2d[i][j]}")
+
+print_2darray(array_2d)
+(0,0) = 1
+(0,1) = 0
+(0,2) = 1
+(1,0) = 1
+(1,1) = 1
+(1,2) = 1
+(2,0) = 0
+(2,1) = 0
+(2,2) = 1
+
+-----------
+
 list_of_lists=[[]]
 
 list_of_lists[0].extend([1,2])
