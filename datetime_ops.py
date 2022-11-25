@@ -8,55 +8,76 @@ date.today().strftime('%Y-%m-%d')
 
 #--------------date time ----------------
 from datetime import datetime
-now = datetime.now()
-
-#Convert from date object(s) to String
-#sNow = str(now)
-print("{}".format( now ) )
+dt_now = datetime.now()
+print(dt_now)
 #=>2017-12-20 08:36:21.525668
 
-dtFormatted = datetime.now().strftime( '%Y-%m-%d %H:%M:%S' )
-print("Current datetime: {}".format( dtFormatted ) )
-#=> Current datetime: 2017-12-20 08:44:17
+
+print( dt_now.strftime( '%Y-%m-%d %H:%M:%S' ) )
+#=> 2017-12-20 08:44:17
 
 #Format timezone using '%Y-%m-%d %H:%M:%S %Z%z'
 #=> 2002-10-27 12:00:00 CET+0100
 
 #datetime in ISO format
-dtISOformat = datetime.now().isoformat()
+dtISOformat = dt_now.isoformat()
 #=> 2017-12-20T08:59:37.145674
 
 #Specific part of datetime
-now.month
-now.year
+dt_now.month
+dt_now.year
 
 #Scenario: Print Last Month & Year (Format: 2021-AUG)
-now = datetime.now()
-last_month = now.month - 1 if now.month > 1 else 12
+dt_now = datetime.now()
+last_month = dt_now.month - 1 if dt_now.month > 1 else 12
 last_month_name = ['JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC'][last_month-1]
-year = now.year-1 if last_month == 12 else now.year
-print("Report for:" +str(year)+"-"+last_month_name)
-
-#------------Conversion--------------
-
-#Convert 12Hr format into 24Hr format
-currDT='07:28:12 PM'
-dtObj = datetime.strptime(currDT, '%I:%M:%S %p')
-print("24 hr format ({}) =".format(currDT), dtObj.strftime('%H:%M:%S') )
+year = dt_now.year-1 if last_month == 12 else now.year
+print("Report for:", str(year)+"-"+last_month_name)
 
 
-#Convert from date String to object(s)
+#Convert from date String to datetime object
 dt1 = datetime.strptime("2007-12-25 23:44:56", "%Y-%m-%d %H:%M:%S")
 print("String to Date obj: {}".format( dt1) )
 
 
+#Ex: 12Hr format into 24Hr format
+currDT='07:28:12 PM'
+dtObj = datetime.strptime(currDT, '%I:%M:%S %p')
+print("24 hr format ({}) =".format(currDT), dtObj.strftime('%H:%M:%S') )
 
+#----difference between 2 dates
+
+#using now()
+time_start = datetime.now()
+
+time_end = datetime.now()
+
+time_diff = time_end-time_start
+=>datetime.timedelta(seconds=5832, microseconds=491302)
+
+time_diff.seconds
+=> 5832
+time_diff.total_seconds()
+=> 5832.491302
+
+
+
+#-----------------------milli/micro seconds
 #------timestamp (time in milliseconds)
 from datetime import datetime
 ts = datetime.now().timestamp()
 print(f"current timestamp: {ts}")
 =>current timestamp: 1663859078.253567
 
+str_dt_start = datetime.fromtimestamp(ms_start).strftime('%Y-%m-%d %H:%M:%S')
+
+#time diff
+sec_diff = int(ms_end-ms_start)
+ms_total = int(ms_end*1000 - ms_start*1000)
+
+
+
+#-----time
 import time
 time_current = time.time()
 print(f"current time: {time_current}")
