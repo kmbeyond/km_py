@@ -53,12 +53,12 @@ time_start = datetime.now()
 time_end = datetime.now()
 
 time_diff = time_end-time_start
-=>datetime.timedelta(seconds=5832, microseconds=491302)
+#=>datetime.timedelta(seconds=5832, microseconds=491302)
 
 time_diff.seconds
-=> 5832
+#=> 5832
 time_diff.total_seconds()
-=> 5832.491302
+#=> 5832.491302
 
 
 
@@ -67,26 +67,27 @@ time_diff.total_seconds()
 from datetime import datetime
 ts = datetime.now().timestamp()
 print(f"current timestamp: {ts}")
-=>current timestamp: 1663859078.253567
+#=>current timestamp: 1663859078.253567
 
-str_dt_start = datetime.fromtimestamp(ms_start).strftime('%Y-%m-%d %H:%M:%S')
+str_dt_start = datetime.fromtimestamp(ts).strftime('%Y-%m-%d %H:%M:%S')
 
+ts_start = datetime.now().timestamp()
+ts_end = datetime.now().timestamp()
 #time diff
-sec_diff = int(ms_end-ms_start)
-ms_total = int(ms_end*1000 - ms_start*1000)
+sec_diff = int(ts_end - ts_start)
+ms_total = int(ts_end*1000 - ts_start*1000)
 
 
 
 #-----time
 import time
 time_current = time.time()
-print(f"current time: {time_current}")
-=>current time: 1663858767.2510579
+#=>current time: 1663858767.2510579
 
 #to rounded milliseconds (10 digits)
 ms_current = round(time_current)
 print("time in milliseconds=", ms_current )
-=> time in milliseconds= 1663856362
+#=> time in milliseconds= 1663856362
 
 time_in_ms = 1646380381322
 #NOTE: if timestamp more than 10 digits, divide by appropriate 10s
@@ -102,7 +103,7 @@ print(datetime.fromtimestamp(time_current).strftime('%Y-%m-%d %H:%M:%S') )
 => 2022-09-22 10:13:29
 
 
-#---get past/futue timestamp
+#---get past/future timestamp
 past_hours=1
 ms_back = round( (time.time()-(60 * 60 * past_hours)) )
 print(datetime.fromtimestamp(ms_back))
