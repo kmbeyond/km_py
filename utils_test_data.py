@@ -55,19 +55,19 @@ def gen_random_string(type, num_chars=10):
     return s_random_chars
 
 
-def gen_random_from_list(data_list):
-    return data_list[random.randint(0, len(data_list) - 1)]
+def gen_random_from_list(list_lookup):
+    return list_lookup[random.randint(0, len(list_lookup) - 1)]
 
 
-def gen_random_from_list2(data_list, already_picked_list, trials=3):
+def gen_random_from_list2(list_lookup, already_picked_list, trials=3):
     # Does not return duplicates
     while trials > 0:
-        rand_index = random.randint(0, len(data_list) - 1)
-        if rand_index in already_picked_list:
+        rand_item = random.randint(0, len(list_lookup) - 1)
+        if rand_item in already_picked_list:
             trials -= 1
         else:
-            already_picked_list.append(rand_index)
-            return data_list[rand_index]
+            #already_picked_list.append(rand_item)
+            return rand_item
     return ""
 
 
