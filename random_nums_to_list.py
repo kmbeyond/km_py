@@ -33,7 +33,7 @@ retries = 1
 from datetime import datetime
 time_start = datetime.now()
 my_list = generate_random_num_list(loop_times, list_lookup,retries)
-print("Items generated:",len(my_list))
+print("Items count:",len(my_list))
 time_end = datetime.now()
 time_diff = time_end-time_start
 
