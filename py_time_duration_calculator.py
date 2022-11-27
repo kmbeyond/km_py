@@ -10,9 +10,9 @@ time_diff = time_end-time_start
 time_diff
 datetime.timedelta(seconds=5832, microseconds=491302)
 time_diff.seconds
-=> 5832
+#=> 5832
 time_diff.total_seconds()
-=> 5832.491302
+#=> 5832.491302
 
 
 #---KM ops

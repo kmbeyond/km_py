@@ -9,7 +9,7 @@ def gen_random_item_from_list(list_lookup, add_to_list, retries=3):
     import random
     # Does not return duplicates
     while retries > 0:
-        rand_item = gen_random_from_list(list_lookup)
+        rand_item = gen_random_item_from_list(list_lookup)
         if rand_item in add_to_list:
             retries -= 1
         else:
@@ -30,6 +30,7 @@ list_lookup = range(100000)
 loop_times = 10000
 retries = 1
 
+from datetime import datetime
 time_start = datetime.now()
 my_list = generate_random_num_list(loop_times, list_lookup,retries)
 print("Items generated:",len(my_list))
