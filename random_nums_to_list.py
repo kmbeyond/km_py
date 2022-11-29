@@ -4,7 +4,7 @@ def gen_random_item_from_list(list_lookup):
     import random
     return list_lookup[random.randint(0, len(list_lookup) - 1)]
 
-#overloaded function to check to get unique item
+
 def gen_random_item_from_list2(list_lookup, add_to_list, retries):
     # Does not return duplicates
     while retries > 0:
