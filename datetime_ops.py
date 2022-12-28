@@ -167,3 +167,21 @@ print("GMT: {}".format( time.strftime("%Y-%m-%d %H:%M:%S", time.gmtime()) ))
 
 import os
 print("Timezone: {}".format( time.tzname ) )
+
+#-----from military to 12hr format
+def to_12_hour_format(str_military):
+ #str_military='13:12:33'
+ hr,mi,sc = str_military[0:2], str_military[3:5], str_military[6:8]
+ am = 'AM' if int(hr) <= 12 else 'PM'
+ hr = int(hr)-12 if int(hr)>=12 else int(hr)
+ hr = 12 if hr==0 else hr
+ hr = str(hr).zfill(2)
+ return (':'.join([str(hr),mi,sc]))+am
+
+print(to_12_hour_format('13:12:33'))
+print(to_12_hour_format('12:12:33'))
+print(to_12_hour_format('07:12:33'))
+
+#using datetime functions
+dt = datetime.strptime('13:12:33', '%H:%M:%S')
+print(dt.strftime('%I:%M:%S %p'))
