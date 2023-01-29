@@ -69,8 +69,18 @@ ts = datetime.now().timestamp()
 print(f"current timestamp: {ts}")
 #=>current timestamp: 1663859078.253567
 
-str_dt_start = datetime.fromtimestamp(ts).strftime('%Y-%m-%d %H:%M:%S')
+#IMP: to get unix/epoch time that is used mostly for logging
+int(datetime.now().timestamp())
+#OR using time
+import time
+int(time.mktime(datetime.now().timetuple()))
 
+
+#get formatted datetime from a timestamp data
+datetime.fromtimestamp(1663859078).strftime('%Y-%m-%d %H:%M:%S')
+#=>2022-09-22 10:04:38
+
+#USE CASE: time difference between 2 datetimes
 ts_start = datetime.now().timestamp()
 ts_end = datetime.now().timestamp()
 #time diff
