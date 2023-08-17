@@ -1,3 +1,6 @@
+#SETUP
+#-add topic policy statement allowing user arn to publish message
+
 from datetime import datetime, timedelta
 import json,logging
 import airflow, yaml
@@ -36,7 +39,7 @@ def send_sns_message(account_num, region_name, topic_name, subject, message, **k
     try:
         sns = boto3.resource('sns',
             endpoint_url='https://sns.'+region_name+'.amazonaws.com',
-            region_name=region_name
+            region_name=region_name, aws_access_key_id='xxx', aws_secret_access_key='xxx'
         )
         topic = sns.Topic(topic_arn)
         # publish to SNS
