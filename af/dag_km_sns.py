@@ -1,8 +1,9 @@
 from datetime import datetime, timedelta
-import logging, airflow, yaml
+import json,logging
+import airflow, yaml
 from airflow import DAG
-from airflow.operators.python_operator import PythonOperator
-
+#from airflow.operators.python_operator import PythonOperator
+from airflow.operators.python import PythonOperator, PythonVirtualenvOperator
 
 # logging setup
 logging.basicConfig(level=logging.ERROR)
@@ -51,11 +52,14 @@ def send_sns_message(account_num, region_name, topic_name, subject, message, **k
         ## using client (low level) & direct SMS
         #sns_client = boto3.client('sns')
         #sns_client.publish(PhoneNumber="+1234567890", Message="testing simple text")
+        logging.info("Message sent to topic:"+topic_arn)
+        logging.info("SNS response: "+json.dumps(response))
     except Exception as err:
-        logging.info(f"Exception during division: {err}")
+        logging.info(f"Exception : {err}")
         if kwargs['task_instance'].try_number == 4:
             pass
         #raise Exception("Exception during division")
+
 
 
 default_args = {
@@ -84,4 +88,7 @@ with DAG('dag_km_sns', default_args=default_args, schedule_interval=None, catchu
         }
     )
     send_sns_message
+
+if __name__ == "__main__":
+    dag.cli()
 
