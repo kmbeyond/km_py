@@ -12,6 +12,11 @@ dt_string='2023-03-13'
 dt_obj = datetime.strptime(dt_string, '%Y-%m-%d')
 if dt_string.strip()=='': dt_obj = datetime.now()
 
+#dt_today = date.today()
+#dt_obj = dt_today
+#dt_yesterday = dt_today - timedelta(days=1)
+#dt_obj = dt_yesterday
+
 from pytz import timezone
 dst_dates = sorted([dt.strftime('%Y-%m-%d') for dt in timezone('America/Chicago')._utc_transition_times if dt.year==dt_obj.year])
 dst_start,dst_end = dst_dates[0],dst_dates[1]
