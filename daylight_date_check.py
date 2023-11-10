@@ -30,3 +30,4 @@ elif dt_string>dst_start and dt_string<dst_end: print('DST')
 elif dt_string==dst_end: print('-----DST Ending date----')
 else: print('DST Ended')
 
+start_time = "07:00:00" if (dt_string > dst_start and dt_string < dst_end) or (dt_string == dst_end) else "08:00:00"
