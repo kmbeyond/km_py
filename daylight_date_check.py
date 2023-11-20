@@ -30,4 +30,20 @@ elif dt_string>dst_start and dt_string<dst_end: print('DST')
 elif dt_string==dst_end: print('-----DST Ending date----')
 else: print('DST Ended')
 
-start_time = "07:00:00" if (dt_string > dst_start and dt_string < dst_end) or (dt_string == dst_end) else "08:00:00"
+start_time = "07:00:00" if (dt_string > dst_start and dt_string <= dst_end) else "08:00:00"
+end_time = "07:00:00" if (dt_string >= dst_start and dt_string < dst_end) else "08:00:00"
+
+
+#---create a function
+def get_start_time(dt_string):
+    dt_obj = datetime.strptime(dt_string, '%Y-%m-%d')
+    from pytz import timezone
+    dst_dates = sorted(
+        [dt.strftime('%Y-%m-%d') for dt in timezone('America/Chicago')._utc_transition_times if dt.year == dt_obj.year])
+    dst_start, dst_end = dst_dates[0], dst_dates[1]
+
+    start_time = "07:00:00" if (dt_string > dst_start and dt_string <= dst_end) else "08:00:00"
+    end_time = "07:00:00" if (dt_string >= dst_start and dt_string < dst_end) else "08:00:00"
+    return (start_time, end_time)
+
+get_start_time('2023-11-05')
