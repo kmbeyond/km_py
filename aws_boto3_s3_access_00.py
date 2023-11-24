@@ -2,7 +2,17 @@
 import boto3
 import io
 
-#boto3.client('sts').get_caller_identity()
+for i in dir(os.environ): print(i)
+os.environ.setdefault('AWS_PROFILE', 'xx') #OR export AWS_PROFILE=xx #OR
+
+os.environ.setdefault('AWS_ACCESS_KEY_ID', "Axxx")
+os.environ.setdefault('AWS_SECRET_ACCESS_KEY', "xxx")
+os.environ.setdefault('AWS_SESSION_TOKEN', "xxxxx")
+
+user_idnty = boto3.client('sts').get_caller_identity()
+import pprint
+pprint.pprint(user_idnty)
+
 
 bucket_name = "xx"
 
