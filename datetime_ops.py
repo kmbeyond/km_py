@@ -45,6 +45,14 @@ currDT='07:28:12 PM'
 dtObj = datetime.strptime(currDT, '%I:%M:%S %p')
 print("24 hr format ({}) =".format(currDT), dtObj.strftime('%H:%M:%S') )
 
+#---add/subtract days/hours to a date
+from datetime import date, datetime, timedelta
+yesterday_date = (date.today()-timedelta(days=1)).strftime('%Y-%m-%d')
+yesterday_date = (datetime.now()-timedelta(days=1)).strftime('%Y-%m-%d')
+
+last_run_date = '2021-11-29'
+previous_date = (datetime.strptime(last_run_date, "%Y-%m-%d")-timedelta(days=1)).strftime('%Y-%m-%d')
+
 #----difference between 2 dates
 
 #using now()
