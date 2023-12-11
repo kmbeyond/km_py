@@ -12,7 +12,8 @@ bucket_name="kmbkt"
 file_dir_prefix="km/"
 file_name_in_s3="km_file.csv"
 #kms_key="kms-key-arn"
-
+#if file name includes path
+#file_name = re.findall(r'.*/(.*)', file_name_w_path)[0]
 
 #pandas dataframe to s3
 import pandas as pd
@@ -32,6 +33,11 @@ conn_s3.meta.client.upload_file("/tmp/data_file.csv",
                                 #ExtraArgs={'ServerSideEncryption': 'aws:kms', 'SSEKMSKeyId': kms_key})
                                 )
 #or: conn_s3.Bucket(bucket_name).upload_file("/tmp/data_file.csv", f"{file_dir_prefix}/{file_name_in_s3}")
+
+#using client object
+s3 = boto3.client('s3')
+s3.upload_file("/tmp/data_file.csv", config.bucket_name, f"{file_dir_prefix}{file_name_in_s3}")
+
 
 #option:2: write df directly to s3
 #data_df.to_csv(f"s3://{bucket_name}/{file_dir_prefix}/{file_name_in_s3}", index=False, header=True)
