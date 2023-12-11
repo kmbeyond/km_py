@@ -26,6 +26,9 @@ def list_files(bkt_name, prefix=""):
     else:
         return bkt_obj, bkt_obj.objects.filter(Prefix=prefix)
 
+#check if file exists in bucket
+if list(bkt_obj.objects.filter(Prefix="bkt_prefix/myfile.csv").limit(1)): print('File found')
+
 
 bkt_obj, obj_list = list_files(bkt_name)
 for obj in obj_list:
