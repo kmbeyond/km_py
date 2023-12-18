@@ -2,6 +2,7 @@ from datetime import timedelta
 from airflow import DAG
 from airflow.operators.dummy import DummyOperator
 from airflow.operators.python import BranchPythonOperator
+from airflow.operators.python_operator import PythonOperator
 from airflow.utils.dates import days_ago
 import random, logging
 
@@ -11,14 +12,22 @@ args = {
     'owner': 'km',
 }
 
+def print_context(**kwargs):
+  print(f"****** Task Id: {kwargs['ti'].task_id}")
+  for k,v in kwargs.items():
+    logging.info(f'{k} = {v}')
+
 def decide_next_steps():
   import random
-  next_tasks = []
-  for task in task_list:
-    if bool(random.choice([True, False])): next_tasks.append(task)
+  next_tasks = random.sample(task_list, random.randint(0, len(task_list)))
 
-  #if want to shuffle sequence
-  random.shuffle(next_tasks)
+  #to expand it
+  #next_tasks = []
+  #for task in task_list:
+  #  if bool(random.choice([True, False])): next_tasks.append(task)
+  #shuffle sequence
+  #random.shuffle(next_tasks)
+
   logging.info(f"Tasks selected: {next_tasks}")
   print(f"Tasks to run: {next_tasks}")
   return next_tasks
@@ -52,8 +61,11 @@ with DAG(
  task_four = DummyOperator(
    task_id='task_four'
  )
- task_five = DummyOperator(
-   task_id='task_five'
+ task_five = PythonOperator(
+   task_id='task_five',
+   python_callable=print_context,
+   provide_context=True,
+   op_kwargs={}
  )
  span_next_tasks >> [task_one, task_two, task_three, task_four, task_five]
 
