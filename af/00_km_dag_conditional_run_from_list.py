@@ -2,9 +2,13 @@ from datetime import timedelta
 from airflow import DAG
 from airflow.operators.dummy import DummyOperator
 from airflow.operators.python import BranchPythonOperator
-from airflow.operators.python_operator import PythonOperator
+from airflow.operators.python_operator import PythonOperator, ShortCircuitOperator
+#v1#from airflow.operators.dummy_operator import DummyOperator
+#from airflow.contrib.hooks.snowflake_hook import SnowflakeHook
+#v1#from airflow.operators.python_operator import BranchPythonOperator
 from airflow.utils.dates import days_ago
 import random, logging
+from airflow.utils.db import provide_session
 
 task_list = ['task_one', 'task_two', 'task_three','task_four','task_five']
 
@@ -31,6 +35,19 @@ def decide_next_steps():
   logging.info(f"Tasks selected: {next_tasks}")
   print(f"Tasks to run: {next_tasks}")
   return next_tasks
+
+@provide_session
+def delete_xcom(session=None, **kwargs):
+    from datetime import timezone, date, datetime, timedelta
+    from airflow.models import XCom
+    today_date = date.today().strftime('%Y-%m-%d')
+    dag_id = kwargs['dag']._dag_id
+    dt_n_days_ago = (today_date - timedelta(days=1)).replace(tzinfo=timezone.utc)
+    try:
+        session.query(XCom).filter((XCom.dag_id == dag_id) & (XCom.execution_date <= dt_n_days_ago)).delete()
+    except Exception as err:
+        details_error = f"EXCEPTION: during deleting xcomms for dag_id: {dag_id}; older than: {dt_n_days_ago}"
+        logging.info(details_error)
 
 with DAG(
     dag_id='00_km_dag_conditional_run_from_list',
@@ -67,7 +84,11 @@ with DAG(
    provide_context=True,
    op_kwargs={}
  )
- span_next_tasks >> [task_one, task_two, task_three, task_four, task_five]
+ delete_xcom = PythonOperator(
+     task_id="delete_xcom",
+     python_callable=delete_xcom
+ )
+ span_next_tasks >> [task_one, task_two, task_three, task_four, task_five] >> delete_xcom
 
 if __name__ == "__main__":
     dag.cli()
