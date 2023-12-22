@@ -41,8 +41,10 @@ def delete_xcom(session=None, **kwargs):
     from datetime import timezone, date, datetime, timedelta
     from airflow.models import XCom
     today_date = date.today().strftime('%Y-%m-%d')
+    for arg in kwargs.items(): logging.info(f" ---> {arg[0]} = {arg[1]}")
     dag_id = kwargs['dag']._dag_id
-    dt_n_days_ago = (today_date - timedelta(days=1)).replace(tzinfo=timezone.utc)
+    #dt_n_days_ago = (datetime.now().replace(tzinfo=timezone.utc) - timedelta(days=1)).replace(tzinfo=timezone.utc)
+    dt_n_days_ago = (datetime.now() - timedelta(days=1))
     try:
         session.query(XCom).filter((XCom.dag_id == dag_id) & (XCom.execution_date <= dt_n_days_ago)).delete()
     except Exception as err:
@@ -52,7 +54,7 @@ def delete_xcom(session=None, **kwargs):
 with DAG(
     dag_id='00_km_dag_conditional_run_from_list',
     default_args=args,
-    schedule_interval='* * * * *',
+    schedule_interval=None,
     start_date=days_ago(2),
     dagrun_timeout=timedelta(minutes=60),
     tags=['km'],
@@ -86,7 +88,9 @@ with DAG(
  )
  delete_xcom = PythonOperator(
      task_id="delete_xcom",
-     python_callable=delete_xcom
+     python_callable=delete_xcom,
+     trigger_rule='none_failed',
+     provide_context=True,
  )
  span_next_tasks >> [task_one, task_two, task_three, task_four, task_five] >> delete_xcom
 
