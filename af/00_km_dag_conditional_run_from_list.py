@@ -43,13 +43,15 @@ def delete_xcom(session=None, **kwargs):
     today_date = date.today().strftime('%Y-%m-%d')
     for arg in kwargs.items(): logging.info(f" ---> {arg[0]} = {arg[1]}")
     dag_id = kwargs['dag']._dag_id
-    #dt_n_days_ago = (datetime.now().replace(tzinfo=timezone.utc) - timedelta(days=1)).replace(tzinfo=timezone.utc)
-    dt_n_days_ago = (datetime.now() - timedelta(days=1))
+    # dag_id = kwargs['ti'].dag_id
+    print(f"**** Delete XCom of DAG: {dag_id}")
+    dt_n_days_ago = (datetime.now().replace(tzinfo=timezone.utc) - timedelta(days=1)).replace(tzinfo=timezone.utc)
     try:
-        session.query(XCom).filter((XCom.dag_id == dag_id) & (XCom.execution_date <= dt_n_days_ago)).delete()
+        session.query(XCom).filter((XCom.dag_id == dag_id) & (XCom.execution_date <= dt_n_days_ago)).delete(synchronize_session=False)
     except Exception as err:
-        details_error = f"EXCEPTION: during deleting xcomms for dag_id: {dag_id}; older than: {dt_n_days_ago}"
+        details_error = f"EXCEPTION: during deleting xcomms for dag_id: {dag_id}; older than: {dt_n_days_ago}: ERROR: {err}"
         logging.info(details_error)
+        raise ValueError(details_error)
 
 with DAG(
     dag_id='00_km_dag_conditional_run_from_list',

@@ -21,11 +21,11 @@ def delete_xcom(session=None, **kwargs):
     for dag_id in dags_to_delete_xcomms:
         logging.info(f"Deleting XComm for dag_id: {dag_id}; older than: {dt_n_days_ago}")
         try:
-            session.query(XCom).filter((XCom.dag_id == dag_id) & (XCom.execution_date <= dt_n_days_ago) ).delete()
+            session.query(XCom).filter((XCom.dag_id == dag_id) & (XCom.execution_date <= dt_n_days_ago) ).delete(synchronize_session='fetch')
         except Exception as err:
-            details_error = f"EXCEPTION: during deleting xcomms for dag_id: {dag_id}; older than: {dt_n_days_ago}"
+            details_error = f"EXCEPTION: during deleting xcomms for dag_id: {dag_id}; older than: {dt_n_days_ago}\n** ERROR: {err}"
             logging.info(details_error)
-            utils_email.email_api_publish_message("ppa_delete_xcomm", "delete_xcom", "EXCEPTION", details_error)
+            raise ValueError(details_error)
 
 
 def dag_success_notification(context, **kwargs):
