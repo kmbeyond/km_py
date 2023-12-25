@@ -1,16 +1,16 @@
 from datetime import timedelta
 from airflow import DAG
-from airflow.operators.dummy import DummyOperator
-from airflow.operators.python import BranchPythonOperator
+from airflow.operators.dummy import DummyOperator   #v2
+from airflow.operators.python import BranchPythonOperator  #v2
 from airflow.operators.python_operator import PythonOperator, ShortCircuitOperator
-#v1#from airflow.operators.dummy_operator import DummyOperator
+#v1#from airflow.operators.dummy_operator import DummyOperator    #v1
 #from airflow.contrib.hooks.snowflake_hook import SnowflakeHook
-#v1#from airflow.operators.python_operator import BranchPythonOperator
+#v1#from airflow.operators.python_operator import BranchPythonOperator   #v1
 from airflow.utils.dates import days_ago
 import random, logging
 from airflow.utils.db import provide_session
 
-task_list = ['task_one', 'task_two', 'task_three','task_four','task_five']
+task_list = ['task_1', 'task_2', 'task_3','task_4','task_5']
 
 args = {
     'owner': 'km',
@@ -31,7 +31,7 @@ def decide_next_steps():
   #  if bool(random.choice([True, False])): next_tasks.append(task)
   #shuffle sequence
   #random.shuffle(next_tasks)
-
+  next_tasks.sort()
   logging.info(f"Tasks selected: {next_tasks}")
   print(f"Tasks to run: {next_tasks}")
   return next_tasks
@@ -68,22 +68,22 @@ with DAG(
    task_id="span_next_tasks",
    python_callable=decide_next_steps
  )
- task_one = DummyOperator(
-   task_id='task_one'
+ task_1 = DummyOperator(
+   task_id='task_1'
  )
 
- task_two = DummyOperator(
-   task_id='task_two'
+ task_2 = DummyOperator(
+   task_id='task_2'
  )
 
- task_three = DummyOperator(
-   task_id='task_three'
+ task_3 = DummyOperator(
+   task_id='task_3'
  )
- task_four = DummyOperator(
-   task_id='task_four'
+ task_4 = DummyOperator(
+   task_id='task_4'
  )
- task_five = PythonOperator(
-   task_id='task_five',
+ task_5 = PythonOperator(
+   task_id='task_5',
    python_callable=print_context,
    provide_context=True,
    op_kwargs={}
@@ -94,7 +94,7 @@ with DAG(
      trigger_rule='none_failed',
      provide_context=True,
  )
- span_next_tasks >> [task_one, task_two, task_three, task_four, task_five] >> delete_xcom
+ span_next_tasks >> [task_1, task_2, task_3, task_4, task_5] >> delete_xcom
 
 if __name__ == "__main__":
     dag.cli()
