@@ -6,6 +6,7 @@ from airflow.operators.python import PythonOperator, PythonVirtualenvOperator
 from airflow.utils.dates import days_ago
 import logging
 
+
 # logging setup
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
