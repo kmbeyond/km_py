@@ -15,7 +15,7 @@ def decide_next_step():
 with DAG(
     dag_id='00_km_dag_conditional_run',
     default_args=args,
-    schedule_interval='* * * * *',
+    schedule_interval=None,
     start_date=days_ago(2),
     dagrun_timeout=timedelta(minutes=60),
     tags=['km'],
