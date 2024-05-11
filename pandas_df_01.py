@@ -222,25 +222,32 @@ df2 = df2.rename(columns=lambda x: x.replace('$', ''))
 print("--------------groupby--------------")
 #groupby() & apply functions
 txnsdf = pd.read_csv("/home/km/km/km_practice/data/data_rtl_txns.csv")
+pd.set_option('display.max_columns', None)
+txnsdf.head()
 #total qty sold by sku (group by sku)
+store_trans_df = txnsdf.groupby(['sku_id']).agg(total_rows=('qty', 'size'),
+                                                total_qty=('qty', 'sum'))
 soldSkuDF = txnsdf.groupby('sku_id')['qty'].sum()
-soldSkuDF = txnsdf.groupby('sku_id').agg({'qty' : ['size','sum', 'min', 'max', 'mean', 'std']})
-soldSkuDF = txnsdf.groupby(['sku_id', 'store_id']).agg({'qty' : ['sum', 'min', 'max', 'mean', 'std']})
+soldSkuDF = txnsdf.groupby('sku_id').agg({'qty' : ['size', 'sum', 'min', 'max', 'mean', 'std']}).head()
+soldSkuDF = txnsdf.groupby(['sku_id', 'store_id']).agg({'qty': ['sum', 'min', 'max', 'mean', 'std']})
 
-for sku, group in soldSkuDF.groupby('sku_id'):
-    print("SKU: %s" %sku)
-    print(group)
-    print("\n")
-
+soldSkuDF = txnsdf.groupby(['sku_id']).qty.agg('sum').to_frame('qty_total')
 soldSkuDF = txnsdf.groupby('sku_id').agg({'qty': 'sum'}).rename(columns={'qty': 'qty_total'})
 #can also call sum() as: .agg({'qty': sum})
+
+soldSkuDF.head()
+
+store_trans_df = txnsdf.groupby(['store_id']).paid.agg('sum').to_frame('toal_amount')
+store_trans_df = txnsdf.groupby(['store_id']).agg({'paid': ['size', 'sum']})
+store_trans_df.head()
+
 
 #Adds prefix to column title
 txnsdf.groupby('sku_id').agg({'qty': sum}).add_prefix('total_')
 
 
-strSkuQtyDF = txnsdf.groupby(['store_id', 'sku_id'], as_index=False)['qty'].sum()
-
+strSkuQtyDF = txnsdf.groupby(['store_id', 'sku_id'])['qty'].sum()
+strSkuQtyDF.head()
 
 #pivot() by store & sku
 print("--------------Pivot--------------")
