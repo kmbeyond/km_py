@@ -139,28 +139,30 @@ print(datetime.now() + timedelta(hours=5))
 
 
 #-------------Timezones & UTC/GMT-----
-import pytz
-dtUTC = datetime.now(pytz.utc)
-dtUTC.strftime('%Y-%m-%d %H:%M:%S')
-#=> 2017-12-20 14:47:38
+from datetime import datetime
+datetime.now() #--> local timezone
 
-from datetime import timezone
-dtUTC2 = datetime.now(timezone.utc)
+#pytz: needs installing pytz library (using pip)
+import pytz #import timezone
+
+#--to EST
+datetime.now(pytz.timezone("America/New_York"))
+datetime.now().astimezone(pytz.timezone('America/New_York'))
+
+#--to UTC
+datetime.now(pytz.timezone("UTC"))
+datetime.now().astimezone(pytz.timezone('UTC'))
+datetime.now(pytz.utc)
+
+dtUTC = datetime.now(pytz.utc)
 dtUTC.strftime('%Y-%m-%d %H:%M:%S %Z')
 #=> 2017-12-20 14:50:37 UTC
-
 dtUTC.strftime('%Y-%m-%d %H:%M:%S %z')
 #=> 2017-12-20 14:50:37 +0000
 
-#needs installing pytz library (using pip)
+
 cst = pytz.timezone('US/Central')
-datetime.now(cst).strftime('%Y-%m-%d %H:%M:%S %z')
-#=> 2017-12-20 09:31:56 CST-0600
-
 chicagotz = pytz.timezone('America/Chicago')
-print("America/Chicago=", datetime.now(chicagotz).strftime('%Y-%m-%d %H:%M:%S %z'))
-#=> 2017-12-20 09:33:56 CST-0600
-
 latz = pytz.timezone('America/Los_Angeles')
 datetime.now(latz).strftime('%Y-%m-%d %H:%M:%S %z')
 #=> m2017-12-20 07:35:01 PST-0800
