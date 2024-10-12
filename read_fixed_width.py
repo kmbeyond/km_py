@@ -10,7 +10,7 @@ data_df.head(5)
 
 from datetime import datetime
 data_df['ROW_NUMBER'] = data_df.index+1
-data_df['JOB_ID'] = '20241011-082233'
+data_df['JOB_ID'] = datetime.now().strftime('%Y%m%d-%H%M%S')
 data_df['LOAD_DATE'] = datetime.now().strftime('%Y-%m-%d')
 data_df['LOAD_TIMESTAMP'] = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
 
