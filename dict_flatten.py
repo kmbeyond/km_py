@@ -23,11 +23,37 @@ def flatten_dict(d, parent_key='', sep='_', used_keys=None):
 
 dict_flat = flatten_dict(d, parent_key='', sep='.', used_keys=None)
 
-l1=[x for x in dict_flat.items()]
-for x in l1: print(x[0],' = ', x[1])
-
+l1 = [x for x in dict_flat.items()]
 import pandas as pd
-df =pd.DataFrame(l1)
-df.columns = ['element','value']
+df = pd.DataFrame(l1)
+df.columns = ['element', 'value']
 print(df)
 
+
+#--------full flattening
+
+def flatten_full(y):
+  out = {}
+
+  def flatten(x, name=''):
+    if type(x) is dict:
+      for a in x:
+        flatten(x[a], name + a + '.')
+    elif type(x) is list:
+      i = 0
+      for a in x:
+        flatten(a, name + str(i) + '.')
+        i += 1
+    else:
+      out[name[:-1]] = x
+
+  flatten(y)
+  return out
+
+
+d_flat2 = flatten_full(d)
+l1 = [x for x in d_flat2.items()]
+
+df = pd.DataFrame(l1)
+df.columns = ['element', 'value']
+print(df)
