@@ -20,15 +20,15 @@ def flatten_dict(d, parent_key='', sep='_', used_keys=None):
             items.append((new_key, v))
     return dict(items)
 
+def flatten_dict_print(d):
+    dict_flat = flatten_dict(d, parent_key='', sep='.', used_keys=None)
+    l1 = [x for x in dict_flat.items()]
+    import pandas as pd
+    df = pd.DataFrame(l1)
+    df.columns = ['element', 'value']
+    print(df)
 
-dict_flat = flatten_dict(d, parent_key='', sep='.', used_keys=None)
-
-l1 = [x for x in dict_flat.items()]
-import pandas as pd
-df = pd.DataFrame(l1)
-df.columns = ['element', 'value']
-print(df)
-
+#flatten_dict_print(d)
 
 #--------full flattening
 
@@ -51,9 +51,12 @@ def flatten_full(y):
   return out
 
 
-d_flat2 = flatten_full(d)
-l1 = [x for x in d_flat2.items()]
+def flatten_full_print(d):
+    d_flat2 = flatten_full(d)
+    l1 = [x for x in d_flat2.items()]
+    import pandas as pd
+    df = pd.DataFrame(l1)
+    df.columns = ['element', 'value']
+    print(df)
 
-df = pd.DataFrame(l1)
-df.columns = ['element', 'value']
-print(df)
+#flatten_full_print(d)
