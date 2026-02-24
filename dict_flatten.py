@@ -1,62 +1,65 @@
+#-----------------Flatten Dictionary into base key-value pairs-------------
 
-d = { 'x': {'x1': 1, 'x2':[1.1,1.2], 'x3': {'x3_a': 1.333} }, 'y': {'y': 2, 'y2':[2.2,2.2,2.3]}, 'z': 3}
+
+#---source data dictionary
+data = { 'x': {'x1': 1, 'x2':[1.1,1.2], 'x3': {'x3_a': 1.333} }, 'y': {'y': 2, 'y2':[2.20, 2.21, 2.22]}, 'z': 3}
+
+#--dictionary from file
+json_path = '/Users/km/Downloads/70437492542209_run_results.json'
+import json
+data = json.load(open(json_path))
+
+from pathlib import Path
+json_path = Path(json_path)
+with json_path.open("r", encoding="utf-8") as f:
+    data = json.load(f)
 
 
-def flatten_dict(d, parent_key='', sep='_', used_keys=None):
-    if used_keys is None:
-        used_keys = set()
-    items = []
-    for k, v in d.items():
-        new_key = f"{parent_key}{sep}{k}" if parent_key else k
-        orig_key = new_key
-        suffix = 1
-        while new_key in used_keys:
-            new_key = f"{orig_key}_{suffix}"
-            suffix += 1
-        used_keys.add(new_key)
-        if isinstance(v, dict):
-            items.extend(flatten_dict(v, new_key, sep=sep, used_keys=used_keys).items())
+#------------
+from __future__ import annotations
+
+import json
+from typing import Any, Dict, Union
+LeafValue = Union[str, int, float, bool, None]
+
+def read_json_as_dot_kv(data: dict) -> Dict[str, LeafValue]:
+    """
+    Read a JSON dictionary and return a flattened dict of dot-separated keys -> leaf values.
+
+    Rules:
+    - Dictionaries are flattened: keys joined with "." (e.g., "a.b.c").
+    - Lists are flattened: index is appended as "[i]" (e.g., "a.b[0].c").
+    - Leaf values are primitives: string/number/bool/null.
+    """
+
+    out: Dict[str, LeafValue] = {}
+
+    def walk(node: Any, prefix: str = "") -> None:
+        if isinstance(node, dict):
+            for k, v in node.items():
+                new_prefix = f"{prefix}.{k}" if prefix else str(k)
+                walk(v, new_prefix)
+        elif isinstance(node, list):
+            for i, item in enumerate(node):
+                new_prefix = f"{prefix}[{i}]" if prefix else f"[{i}]"
+                walk(item, new_prefix)
         else:
-            items.append((new_key, v))
-    return dict(items)
+            # primitive leaf (str/int/float/bool/None)
+            out[prefix] = node
 
-def flatten_dict_print(d):
-    dict_flat = flatten_dict(d, parent_key='', sep='.', used_keys=None)
-    l1 = [x for x in dict_flat.items()]
-    import pandas as pd
-    df = pd.DataFrame(l1)
-    df.columns = ['element', 'value']
-    print(df)
-
-#flatten_dict_print(d)
-
-#--------full flattening
-
-def flatten_full(y):
-  out = {}
-
-  def flatten(x, name=''):
-    if type(x) is dict:
-      for a in x:
-        flatten(x[a], name + a + '.')
-    elif type(x) is list:
-      i = 0
-      for a in x:
-        flatten(a, name + str(i) + '.')
-        i += 1
-    else:
-      out[name[:-1]] = x
-
-  flatten(y)
-  return out
+    walk(data, "")
+    return out
 
 
-def flatten_full_print(d):
-    d_flat2 = flatten_full(d)
-    l1 = [x for x in d_flat2.items()]
-    import pandas as pd
-    df = pd.DataFrame(l1)
-    df.columns = ['element', 'value']
-    print(df)
 
-#flatten_full_print(d)
+#flatten
+kv3 = read_json_as_dot_kv(data)
+
+for k in kv3.items(): print(k[0],'--->', k[1])
+
+#read into pandas dataframe
+import pandas as pd
+df = pd.DataFrame(kv3)
+df.columns = ['element', 'value']
+print(df)
+
