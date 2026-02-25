@@ -1,30 +1,32 @@
 
 import base64
+from base64 import urlsafe_b64encode, urlsafe_b64decode
 
 #---base64 encode string
 user_name="abcdefgh"
-base64.b64encode(user_name.encode('utf-8'))  #returns as bytes
+enc_bytes = base64.b64encode(user_name.encode('utf-8'))  #returns as bytes
 enc_string = base64.b64encode(user_name.encode('utf-8')).decode('utf-8')  #--to get as string
+print(enc_bytes, ' & ', enc_string) #--both are same values
 
 #---decode above string (back to normal string)
-base64.b64decode(enc_string)
-base64.b64decode(enc_string).decode('utf-8') #--to get as string
+dec_bytes = base64.b64decode(enc_string)
+dec_string = base64.b64decode(enc_string).decode('utf-8') #--to get as string
+print(dec_bytes, ' & ', dec_string)  #--both are same values
 
 
-EX: Encode file contents
+#---EX: Encode file contents
 with open('/Users/km/km_pgp_pri.pri', 'r') as f: pri_key = f.read()
 enc_string = base64.b64encode(pri_key.encode('utf-8')).decode('utf-8')
 
 
 
 #---url safe base64 encode/decode
-from base64 import urlsafe_b64encode, urlsafe_b64decode
-#from base64 import urlsafe_b64encode as km64e, urlsafe_b64decode as km64d
 
-name_encoded = urlsafe_b64encode(bytes(user_name, 'utf-8'))
+name_encoded = base64.urlsafe_b64encode(bytes(user_name, 'utf-8'))
 
 #---decode
-d_decoded = urlsafe_b64decode(name_encoded)
+d_decoded = base64.urlsafe_b64decode(name_encoded)
+
 
 
 #---encode json string
