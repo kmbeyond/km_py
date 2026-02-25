@@ -17,7 +17,7 @@ dbt_cloud_job_id = "12345678"
 
 def read_artifacts_file_for_run_id(file_name, max_lines: int = 500, **context) -> None:
     ti = context["ti"]
-    run_id = ti.xcom_pull(task_ids="run_dbt_secondary_platform", key="job_run_id")
+    run_id = ti.xcom_pull(task_ids="km_run_dbt_job", key="job_run_id")
     file_name_full = f"{run_id}_{file_name}"
     import os
     if not os.path.exists(file_name_full):
@@ -44,9 +44,9 @@ def print_dbt_log_file(**context) -> None:
     ti = context["ti"]
     log = logging.getLogger("airflow.task")
 
-    run_id = ti.xcom_pull(task_ids="run_dbt_secondary_platform", key="job_run_id")
+    run_id = ti.xcom_pull(task_ids="km_run_dbt_job", key="job_run_id")
     if not run_id:
-        raise ValueError("job_run_id not found in XCom from run_dbt_secondary_platform")
+        raise ValueError("job_run_id not found in XCom from km_run_dbt_job")
 
     artifact_content = hook.get_job_run_artifact(run_id=run_id, path="dbt.log")
 
