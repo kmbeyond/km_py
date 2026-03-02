@@ -12,6 +12,9 @@ import logging
 #from airflow.models import Variable
 from airflow.providers.dbt.cloud.hooks.dbt import DbtCloudHook
 
+#import custom operator
+from dbt_cloud_get_run_logs import CustomDbtCloudGetRunLogsOperator
+
 dbt_cloud_conn_id = "km_af_conn" #airflow connection to dbt cloud (Acc#, url, pat, ...)
 dbt_cloud_job_id = "12345678"
 
@@ -106,4 +109,26 @@ with DAG(
         op_kwargs = { },
     )
 
+    # NEW: pull actual run logs (what you see in dbt Cloud UI) via DbtCloudGetRunLogsOperator
+    get_run_logs = CustomDbtCloudGetRunLogsOperator(
+        task_id="get_dbt_cloud_run_logs",
+        dbt_cloud_conn_id = dbt_cloud_conn_id,
+        log_type='debug_logs',
+        log_target_directory_path='./dbt_cloud_logs_',
+        # note the dbt cloud run id will be pre_fixed on to this string to ensure unqiueness
+        log_file_name=f'_dbt_cloud_debug_console_logs',
+        dbt_cloud_run_id="{{ ti.xcom_pull(task_ids='km_run_dbt_job', key='job_run_id') }}"
+    )
+
+    # NEW: print those logs into Airflow log output, preserving newlines
+    print_run_logs = PythonOperator(
+        task_id="print_dbt_cloud_run_logs",
+        python_callable=print_run_logs_from_xcom,
+        provide_context=True,
+        op_kwargs={
+            "upstream_task_id": "get_dbt_cloud_run_logs",
+            "max_chars": 200000,
+        },
+    )
     km_run_dbt_job >> get_run_results >> read_artifacts_file >> print_run_output
+    km_run_dbt_job >> get_run_logs >> print_run_logs
