@@ -3,9 +3,12 @@ import json
 #json string to dict
 data = '{"prop":"val"}'
 data_json = json.loads(data)
-
 print(data_json['prop'])
 print(data_json.get('prop'))
+
+#json from utf-8
+payload_str = r'''{"status":{"code":200,"is_success":true}}'''
+data = json.loads(payload_str)
 
 #dict/json to string
 data_json = json.dumps({ "prop":"val"})
