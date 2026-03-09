@@ -10,6 +10,10 @@ print(data_json.get('prop'))
 payload_str = r'''{"status":{"code":200,"is_success":true}}'''
 data = json.loads(payload_str)
 
+#read from bytes
+payload_bytes = b'{"a": true}'
+data = json.loads(payload_bytes.decode("utf-8"))
+
 #dict/json to string
 data_json = json.dumps({ "prop":"val"})
 print(data_json)
