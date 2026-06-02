@@ -108,7 +108,7 @@ def get_dag_runs_count_api(check_dag_id, **context):
     #logging.info([m for m in dir(task_instance_api_instance) if "task" in m.lower() or "instance" in m.lower()])
     #import inspect
     #logging.info(inspect.signature(task_instance_api_instance.patch_task_instance))
-    logging.info(inspect.signature(dag_run_api_instance.patch_dag_run))
+    #logging.info(inspect.signature(dag_run_api_instance.patch_dag_run))
 
     offset = 0
     page_size = 100  # Airflow API commonly caps this endpoint at 100 rows/page.
